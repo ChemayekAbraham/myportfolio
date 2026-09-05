@@ -62,21 +62,13 @@ export const InstallPrompt: React.FC = () => {
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
     window.addEventListener('appinstalled', handleAppInstalled);
 
-    // On iOS Safari, beforeinstallprompt doesn't fire, so trigger prompt after 1.2s on mobile view
-    if (isIosDevice) {
-      const timer = setTimeout(() => {
-        if (window.innerWidth < 768) {
-          setShowPrompt(true);
-        }
-      }, 1200);
-      return () => {
-        clearTimeout(timer);
-        window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-        window.removeEventListener('appinstalled', handleAppInstalled);
-      };
-    }
+    // Trigger prompt after 1000ms for first-time visitors (on both desktop & mobile)
+    const fallbackTimer = setTimeout(() => {
+      setShowPrompt(true);
+    }, 1000);
 
     return () => {
+      clearTimeout(fallbackTimer);
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
       window.removeEventListener('appinstalled', handleAppInstalled);
     };
@@ -163,14 +155,14 @@ export const InstallPrompt: React.FC = () => {
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-1.5">
                   <h4 className="text-sm font-bold text-slate-900 dark:text-white">
-                    Added to Home Screen!
+                    Added to Desktop / Home Screen!
                   </h4>
                   <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 shrink-0">
                     INSTALLED
                   </span>
                 </div>
                 <p className="text-xs text-slate-600 dark:text-gray-300 mt-1 leading-tight">
-                  Chemayek Abraham's App is now installed on your device for fast offline access.
+                  Chemayek Abraham's App is now installed and ready for fast offline access.
                 </p>
                 <div className="mt-3">
                   <button
@@ -212,7 +204,7 @@ export const InstallPrompt: React.FC = () => {
                   </span>
                 </div>
                 <p className="text-xs text-slate-600 dark:text-gray-300 mt-0.5 leading-tight">
-                  Install this portfolio app on your device for fast, 1-tap offline access.
+                  Install this portfolio app on your desktop or phone for fast, 1-tap offline access.
                 </p>
 
                 {/* Actions */}
