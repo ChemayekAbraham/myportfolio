@@ -8,94 +8,88 @@ import {
   CheckCircle2,
   UserCheck,
   Users,
-  Phone
+  Phone,
+  Loader2
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 import { EXPERIENCE_ITEMS, PERSONAL_INFO, PERSONAL_ATTRIBUTES, REFERENCES } from '../data/portfolioData';
 import { SectionHeader } from '../components/SectionHeader';
 
 export const Resume: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'all' | 'experience' | 'education'>('all');
   const [downloadSuccess, setDownloadSuccess] = useState(false);
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
 
   const filteredItems = EXPERIENCE_ITEMS.filter((item) => {
     if (activeTab === 'all') return true;
     return item.type === activeTab;
   });
 
-  const handleDownloadPDF = () => {
-    confetti({
-      particleCount: 80,
-      spread: 70,
-      origin: { y: 0.6 },
-      colors: ['#3b82f6', '#06b6d4', '#ffffff', '#60a5fa']
-    });
+  const handleDownloadPDF = async () => {
+    if (isGeneratingPDF) return;
 
-    setDownloadSuccess(true);
-    setTimeout(() => setDownloadSuccess(false), 4000);
+    try {
+      setIsGeneratingPDF(true);
 
-    const printWindow = window.open('', '_blank');
-    if (!printWindow) {
-      alert('Please allow popups to open and print your PDF resume.');
-      return;
-    }
+      // Create an offscreen container for clean, high-resolution rendering
+      const container = document.createElement('div');
+      container.style.position = 'fixed';
+      container.style.left = '-9999px';
+      container.style.top = '0';
+      container.style.width = '800px';
+      container.style.padding = '32px 38px';
+      container.style.background = '#ffffff';
+      container.style.color = '#111111';
+      container.style.fontFamily = '"Times New Roman", Times, Georgia, serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto';
+      container.style.fontSize = '14.5px';
+      container.style.lineHeight = '1.35';
+      container.style.boxSizing = 'border-box';
+      container.style.zIndex = '-9999';
 
-    const htmlContent = `
-      <!DOCTYPE html>
-      <html lang="en">
-      <head>
-        <meta charset="UTF-8">
-        <title>Chemayek Abraham - Curriculum Vitae</title>
+      container.innerHTML = `
         <style>
-          @page {
-            size: A4;
-            margin: 12mm 15mm;
-          }
-          * {
+          .pdf-cv * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
           }
-          body {
+          .pdf-cv {
             font-family: "Times New Roman", Times, Georgia, serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
             color: #111111;
             line-height: 1.35;
             background: #ffffff;
-            font-size: 11.5pt;
+            font-size: 14.5px;
           }
-          .cv-header {
+          .pdf-header {
             text-align: center;
             margin-bottom: 14px;
           }
-          .cv-title {
-            font-size: 19pt;
+          .pdf-title {
+            font-size: 24px;
             font-weight: 900;
             letter-spacing: 1.5px;
             text-transform: uppercase;
             margin-bottom: 3px;
           }
-          .cv-name {
-            font-size: 13.5pt;
+          .pdf-name {
+            font-size: 17px;
             font-weight: 800;
             letter-spacing: 0.8px;
             text-transform: uppercase;
             margin-bottom: 3px;
           }
-          .cv-contact {
-            font-size: 10.5pt;
+          .pdf-contact {
+            font-size: 13.5px;
             color: #222222;
             line-height: 1.4;
           }
-          .cv-contact a {
-            color: #111111;
-            text-decoration: underline;
+          .pdf-section {
+            margin-bottom: 13px;
           }
-          .section {
-            margin-bottom: 12px;
-            page-break-inside: avoid;
-          }
-          .section-title {
-            font-size: 11.5pt;
+          .pdf-section-title {
+            font-size: 14.5px;
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -103,15 +97,11 @@ export const Resume: React.FC = () => {
             padding-bottom: 2px;
             margin-bottom: 6px;
           }
-          
-          /* Tables */
           table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 10.5pt;
+            font-size: 13.5px;
           }
-          
-          /* Personal Info Table */
           .info-table td {
             padding: 2.5px 4px;
             vertical-align: top;
@@ -123,12 +113,10 @@ export const Resume: React.FC = () => {
           .info-val {
             width: 78%;
           }
-
-          /* Bullet List */
           .bullet-list {
             list-style: none;
             padding-left: 0;
-            font-size: 10.5pt;
+            font-size: 13.5px;
           }
           .bullet-list li {
             position: relative;
@@ -140,11 +128,9 @@ export const Resume: React.FC = () => {
             content: "•";
             position: absolute;
             left: 4px;
-            font-size: 13pt;
+            font-size: 16px;
             line-height: 1;
           }
-
-          /* Education & Experience Tables */
           .timeline-table td {
             padding: 4px 4px 6px 4px;
             vertical-align: top;
@@ -152,7 +138,7 @@ export const Resume: React.FC = () => {
           .col-year {
             width: 22%;
             font-weight: 800;
-            font-size: 10.5pt;
+            font-size: 13.5px;
             color: #000000;
             white-space: nowrap;
           }
@@ -160,18 +146,18 @@ export const Resume: React.FC = () => {
             width: 78%;
           }
           .inst-name {
-            font-size: 11pt;
+            font-size: 14px;
             font-weight: 800;
             color: #000000;
           }
           .inst-award {
-            font-size: 10.5pt;
+            font-size: 13.5px;
             font-weight: 600;
             color: #222222;
             margin-top: 1px;
           }
           .role-desc {
-            font-size: 10pt;
+            font-size: 13px;
             color: #333333;
             margin: 2px 0 3px 0;
             line-height: 1.35;
@@ -184,7 +170,7 @@ export const Resume: React.FC = () => {
           .sub-bullets li {
             position: relative;
             padding-left: 14px;
-            font-size: 10pt;
+            font-size: 13px;
             color: #222222;
             margin-bottom: 2px;
             line-height: 1.3;
@@ -195,12 +181,10 @@ export const Resume: React.FC = () => {
             left: 2px;
             font-weight: bold;
           }
-
-          /* Competencies Table */
           .skills-table td {
             padding: 3px 4px;
             vertical-align: top;
-            font-size: 10.5pt;
+            font-size: 13.5px;
           }
           .skill-label {
             font-weight: 800;
@@ -211,242 +195,287 @@ export const Resume: React.FC = () => {
             width: 68%;
             color: #222222;
           }
-
-          .ref-table td {
-            padding: 4px;
-            font-size: 10.5pt;
-            line-height: 1.4;
-            vertical-align: top;
-          }
-
-          @media print {
-            body {
-              -webkit-print-color-adjust: exact;
-              print-color-adjust: exact;
-            }
-          }
         </style>
-      </head>
-      <body>
-        <!-- Header -->
-        <div class="cv-header">
-          <div class="cv-title">CURRICULUM VITAE</div>
-          <div class="cv-name">${PERSONAL_INFO.name}</div>
-          <div class="cv-contact">
-            Contact: ${PERSONAL_INFO.phoneFormatted} | E-mail: ${PERSONAL_INFO.email}
+
+        <div class="pdf-cv">
+          <!-- Header -->
+          <div class="pdf-header">
+            <div class="pdf-title">CURRICULUM VITAE</div>
+            <div class="pdf-name">${PERSONAL_INFO.name}</div>
+            <div class="pdf-contact">
+              Contact: ${PERSONAL_INFO.phoneFormatted} | E-mail: ${PERSONAL_INFO.email}
+            </div>
+            <div class="pdf-contact">
+              Location: Kapchorwa Municipality, Uganda | LinkedIn: https://www.linkedin.com/in/chemayek-abraham-256984322/
+            </div>
           </div>
-          <div class="cv-contact">
-            Location: Kapchorwa Municipality, Uganda | LinkedIn: https://www.linkedin.com/in/chemayek-abraham-256984322/
+
+          <!-- Personal Information Section -->
+          <div class="pdf-section">
+            <div class="pdf-section-title">PERSONAL INFORMATION</div>
+            <table class="info-table">
+              <tr>
+                <td class="info-label">Sex:</td>
+                <td class="info-val">Male</td>
+              </tr>
+              <tr>
+                <td class="info-label">Marital Status:</td>
+                <td class="info-val">Married (with a son)</td>
+              </tr>
+              <tr>
+                <td class="info-label">Nationality:</td>
+                <td class="info-val">Ugandan</td>
+              </tr>
+              <tr>
+                <td class="info-label">Home District:</td>
+                <td class="info-val">Kapchorwa Municipality</td>
+              </tr>
+              <tr>
+                <td class="info-label">Languages:</td>
+                <td class="info-val">Kupsabiny (Native/Fluent), English (Fluent), and Kiswahili (Conversational)</td>
+              </tr>
+              <tr>
+                <td class="info-label">Family Background:</td>
+                <td class="info-val">Both parents are alive</td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- Personal Profile -->
+          <div class="pdf-section">
+            <div class="pdf-section-title">PERSONAL PROFILE</div>
+            <ul class="bullet-list">
+              <li>Ability to work effectively in a team, Good communication skills</li>
+              <li>Ability to work under pressure, Integrity and honesty</li>
+              <li>Ability to meet tight reporting schedule, result oriented, self-driven and committed towards goal achievement Problem solving, ability to work with minimum supervision</li>
+              <li>Ability to maintain confidentiality</li>
+            </ul>
+          </div>
+
+          <!-- Educational Background Section -->
+          <div class="pdf-section">
+            <div class="pdf-section-title">EDUCATIONAL BACKGROUND</div>
+            <table class="timeline-table">
+              <tr>
+                <td class="col-year">2024 - 2026</td>
+                <td class="col-content">
+                  <div class="inst-name">Nkumba University</div>
+                  <div class="inst-award">Diploma in Information Systems & Technology</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-year">2022 - 2024</td>
+                <td class="col-content">
+                  <div class="inst-name">YMCA Comprehensive Institute</div>
+                  <div class="inst-award">Certificate in Journalism & Mass Communication</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-year">2022 - 2024</td>
+                <td class="col-content">
+                  <div class="inst-name">Uganda Institute of Information & Communications Technology (UICT)</div>
+                  <div class="inst-award">Certificate in Computer Science (Certification Pending)</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-year">2017 - 2020</td>
+                <td class="col-content">
+                  <div class="inst-name">Kapchorwa Town View Secondary School</div>
+                  <div class="inst-award">Uganda Certificate of Education (Senior Four / UCE)</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-year">2010 - 2016</td>
+                <td class="col-content">
+                  <div class="inst-name">Alpha Nursery & Primary School</div>
+                  <div class="inst-award">Primary Leaving Examination (PLE) / Primary Education</div>
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- Work & Professional Experience -->
+          <div class="pdf-section">
+            <div class="pdf-section-title">WORK & PROFESSIONAL EXPERIENCE</div>
+            <table class="timeline-table">
+              <tr>
+                <td class="col-year">2026 - Present</td>
+                <td class="col-content">
+                  <div class="inst-name">Welile Technologies (welileapp.com)</div>
+                  <div class="inst-award">Full-Stack Software Developer & Contributor (Remote / Kapchorwa)</div>
+                  <ul class="sub-bullets">
+                    <li>Actively participating in core application development for welileapp.com and web platforms.</li>
+                    <li>Engineering interactive, responsive UI components using Next.js, React, TypeScript, and Tailwind CSS.</li>
+                    <li>Collaborating on RESTful API endpoint integration, user authentication, and Vercel deployments.</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-year">2024 - 2026</td>
+                <td class="col-content">
+                  <div class="inst-name">Kween Modern High School</div>
+                  <div class="inst-award">Computer Laboratory Technician (Remote)</div>
+                  <ul class="sub-bullets">
+                    <li>Administering computer laboratory workstations, software environments, and peripherals remotely.</li>
+                    <li>Diagnosing and troubleshooting hardware/software system errors remotely, minimizing downtime.</li>
+                    <li>Managing scheduled operating system maintenance, driver updates, and data security procedures.</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-year">2024 - 2025</td>
+                <td class="col-content">
+                  <div class="inst-name">Kapchemweny Stationery, Kapchorwa</div>
+                  <div class="inst-award">Media Production, Video Editing & Design Tutor</div>
+                  <ul class="sub-bullets">
+                    <li>Instructed students in video editing across all Adobe packages (Premiere Pro, Photoshop), Wondershare Filmora, and Vegas Pro.</li>
+                    <li>Operated camera equipment and piloted drones for 4K aerial videography and commercial media packages.</li>
+                    <li>Designed commercial stationery assets, flyers, business cards, and digital marketing materials.</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-year">2019 - 2023<br><span style="font-size: 11.5px; font-weight: normal; color: #444;">(5 Years)</span></td>
+                <td class="col-content">
+                  <div class="inst-name">ICT Centre for Kapchorwa</div>
+                  <div class="inst-award">Computer Repair & Maintenance Specialist (Now Remote)</div>
+                  <ul class="sub-bullets">
+                    <li>Diagnosed and repaired hundreds of desktop PCs, laptops, power modules, motherboards, and storage drives.</li>
+                    <li>Handled clean OS installations, driver configurations, system cloning, malware removal, and preventive maintenance.</li>
+                    <li>Configured local area network (LAN) cabling, routers, switches, and institutional printer peripherals.</li>
+                  </ul>
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- Technical & Creative Competencies -->
+          <div class="pdf-section">
+            <div class="pdf-section-title">KEY TECHNICAL & CREATIVE COMPETENCIES</div>
+            <table class="skills-table">
+              <tr>
+                <td class="skill-label">Software & Web Development:</td>
+                <td class="skill-val">TypeScript, Next.js, React, JavaScript (ES6+), Tailwind CSS, REST APIs, Git/GitHub, welileapp.com</td>
+              </tr>
+              <tr>
+                <td class="skill-label">Drone, Video & Creative Editing:</td>
+                <td class="skill-val">Drone Piloting & Aerial Cinematography, Camera Shooting, Adobe Premiere Pro, After Effects, Wondershare Filmora, Vegas Pro, Photoshop, Lightroom, Illustrator</td>
+              </tr>
+              <tr>
+                <td class="skill-label">Hardware, Repair & Lab Admin:</td>
+                <td class="skill-val">Computer Hardware Diagnostics, Board-Level Repair, OS Deployment (Windows/Linux), Lab Administration, LAN Cabling & Setup</td>
+              </tr>
+              <tr>
+                <td class="skill-label">AI & Modern Productivity Tools:</td>
+                <td class="skill-val">OpenAI API, ChatGPT, Claude, Cursor AI, VS Code, Technical Documentation, Pair Programming</td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- Referees Section -->
+          <div class="pdf-section">
+            <div class="pdf-section-title">REFEREES</div>
+            <table class="timeline-table">
+              <tr>
+                <td style="width: 50%; padding: 4px 10px 4px 0; vertical-align: top;">
+                  <div class="inst-name">1. Chemutai Musau Gilbert</div>
+                  <div class="inst-award">Director, Kween Modern High School</div>
+                  <div class="role-desc">Tel: <strong>0772 426 800</strong></div>
+                </td>
+                <td style="width: 50%; padding: 4px 0 4px 10px; vertical-align: top;">
+                  <div class="inst-name">2. Victor Mzee</div>
+                  <div class="inst-award">CEO, ICT Centre</div>
+                  <div class="role-desc">Tel: <strong>0779 977 942</strong></div>
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 50%; padding: 6px 10px 4px 0; vertical-align: top;">
+                  <div class="inst-name">3. Aggrey Chebet</div>
+                  <div class="inst-award">Manager, Kapchemweny Stationery</div>
+                  <div class="role-desc">Tel: <strong>0778 301 998</strong></div>
+                </td>
+                <td style="width: 50%; padding: 6px 0 4px 10px; vertical-align: top;">
+                  <div class="inst-name">4. Josh Wanda</div>
+                  <div class="inst-award">Head Of ICT, Welile Technologies Limited</div>
+                  <div class="role-desc">Tel: <strong>0704 825 473</strong></div>
+                </td>
+              </tr>
+            </table>
           </div>
         </div>
+      `;
 
-        <!-- Personal Information Section (Table Format) -->
-        <div class="section">
-          <div class="section-title">PERSONAL INFORMATION</div>
-          <table class="info-table">
-            <tr>
-              <td class="info-label">Sex:</td>
-              <td class="info-val">Male</td>
-            </tr>
-            <tr>
-              <td class="info-label">Marital Status:</td>
-              <td class="info-val">Married (with a son)</td>
-            </tr>
-            <tr>
-              <td class="info-label">Nationality:</td>
-              <td class="info-val">Ugandan</td>
-            </tr>
-            <tr>
-              <td class="info-label">Home District:</td>
-              <td class="info-val">Kapchorwa Municipality</td>
-            </tr>
-            <tr>
-              <td class="info-label">Languages:</td>
-              <td class="info-val">Kupsabiny (Native/Fluent), English (Fluent), and Kiswahili (Conversational)</td>
-            </tr>
-            <tr>
-              <td class="info-label">Family Background:</td>
-              <td class="info-val">Both parents are alive</td>
-            </tr>
-          </table>
-        </div>
+      document.body.appendChild(container);
 
-        <!-- Personal Profile -->
-        <div class="section">
-          <div class="section-title">PERSONAL PROFILE</div>
-          <ul class="bullet-list">
-            <li>Ability to work effectively in a team, Good communication skills</li>
-            <li>Ability to work under pressure, Integrity and honesty</li>
-            <li>Ability to meet tight reporting schedule, result oriented, self-driven and committed towards goal achievement Problem solving, ability to work with minimum supervision</li>
-            <li>Ability to maintain confidentiality</li>
-          </ul>
-        </div>
+      // Render canvas at 2x scale for crystal-clear text quality
+      const canvas = await html2canvas(container, {
+        scale: 2,
+        useCORS: true,
+        logging: false,
+        backgroundColor: '#ffffff'
+      });
 
-        <!-- Educational Background Section (Table Format) -->
-        <div class="section">
-          <div class="section-title">EDUCATIONAL BACKGROUND</div>
-          <table class="timeline-table">
-            <tr>
-              <td class="col-year">2024 - 2026</td>
-              <td class="col-content">
-                <div class="inst-name">Nkumba University</div>
-                <div class="inst-award">Diploma in Information Systems & Technology</div>
-              </td>
-            </tr>
-            <tr>
-              <td class="col-year">2022 - 2024</td>
-              <td class="col-content">
-                <div class="inst-name">YMCA Comprehensive Institute</div>
-                <div class="inst-award">Certificate in Journalism & Mass Communication</div>
-              </td>
-            </tr>
-            <tr>
-              <td class="col-year">2022 - 2024</td>
-              <td class="col-content">
-                <div class="inst-name">Uganda Institute of Information & Communications Technology (UICT)</div>
-                <div class="inst-award">Certificate in Computer Science (Certification Pending)</div>
-              </td>
-            </tr>
-            <tr>
-              <td class="col-year">2017 - 2020</td>
-              <td class="col-content">
-                <div class="inst-name">Kapchorwa Town View Secondary School</div>
-                <div class="inst-award">Uganda Certificate of Education (Senior Four / UCE)</div>
-              </td>
-            </tr>
-            <tr>
-              <td class="col-year">2010 - 2016</td>
-              <td class="col-content">
-                <div class="inst-name">Alpha Nursery & Primary School</div>
-                <div class="inst-award">Primary Leaving Examination (PLE) / Primary Education</div>
-              </td>
-            </tr>
-          </table>
-        </div>
+      // Remove temporary offscreen container
+      document.body.removeChild(container);
 
-        <!-- Work & Professional Experience (Table Format) -->
-        <div class="section">
-          <div class="section-title">WORK & PROFESSIONAL EXPERIENCE</div>
-          <table class="timeline-table">
-            <tr>
-              <td class="col-year">2026 - Present</td>
-              <td class="col-content">
-                <div class="inst-name">Welile Technologies (welileapp.com)</div>
-                <div class="inst-award">Full-Stack Software Developer & Contributor (Remote / Kapchorwa)</div>
-                <ul class="sub-bullets">
-                  <li>Actively participating in core application development for welileapp.com and web platforms.</li>
-                  <li>Engineering interactive, responsive UI components using Next.js, React, TypeScript, and Tailwind CSS.</li>
-                  <li>Collaborating on RESTful API endpoint integration, user authentication, and Vercel deployments.</li>
-                </ul>
-              </td>
-            </tr>
-            <tr>
-              <td class="col-year">2024 - 2026</td>
-              <td class="col-content">
-                <div class="inst-name">Kween Modern High School</div>
-                <div class="inst-award">Computer Laboratory Technician (Remote)</div>
-                <ul class="sub-bullets">
-                  <li>Administering computer laboratory workstations, software environments, and peripherals remotely.</li>
-                  <li>Diagnosing and troubleshooting hardware/software system errors remotely, minimizing downtime.</li>
-                  <li>Managing scheduled operating system maintenance, driver updates, and data security procedures.</li>
-                </ul>
-              </td>
-            </tr>
-            <tr>
-              <td class="col-year">2024 - 2025</td>
-              <td class="col-content">
-                <div class="inst-name">Kapchemweny Stationery, Kapchorwa</div>
-                <div class="inst-award">Media Production, Video Editing & Design Tutor</div>
-                <ul class="sub-bullets">
-                  <li>Instructed students in video editing across all Adobe packages (Premiere Pro, Photoshop), Wondershare Filmora, and Vegas Pro.</li>
-                  <li>Operated camera equipment and piloted drones for 4K aerial videography and commercial media packages.</li>
-                  <li>Designed commercial stationery assets, flyers, business cards, and digital marketing materials.</li>
-                </ul>
-              </td>
-            </tr>
-            <tr>
-              <td class="col-year">2019 - 2023<br><span style="font-size: 9pt; font-weight: normal; color: #444;">(5 Years)</span></td>
-              <td class="col-content">
-                <div class="inst-name">ICT Centre for Kapchorwa</div>
-                <div class="inst-award">Computer Repair & Maintenance Specialist (Now Remote)</div>
-                <ul class="sub-bullets">
-                  <li>Diagnosed and repaired hundreds of desktop PCs, laptops, power modules, motherboards, and storage drives.</li>
-                  <li>Handled clean OS installations, driver configurations, system cloning, malware removal, and preventive maintenance.</li>
-                  <li>Configured local area network (LAN) cabling, routers, switches, and institutional printer peripherals.</li>
-                </ul>
-              </td>
-            </tr>
-          </table>
-        </div>
+      // Create jsPDF A4 document
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pdfWidth = 210;
+      const pdfHeight = 297;
+      const imgWidth = pdfWidth;
+      const imgHeight = (canvas.height * pdfWidth) / canvas.width;
 
-        <!-- Technical & Creative Competencies (Table Format) -->
-        <div class="section">
-          <div class="section-title">KEY TECHNICAL & CREATIVE COMPETENCIES</div>
-          <table class="skills-table">
-            <tr>
-              <td class="skill-label">Software & Web Development:</td>
-              <td class="skill-val">TypeScript, Next.js, React, JavaScript (ES6+), Tailwind CSS, REST APIs, Git/GitHub, welileapp.com</td>
-            </tr>
-            <tr>
-              <td class="skill-label">Drone, Video & Creative Editing:</td>
-              <td class="skill-val">Drone Piloting & Aerial Cinematography, Camera Shooting, Adobe Premiere Pro, After Effects, Wondershare Filmora, Vegas Pro, Photoshop, Lightroom, Illustrator</td>
-            </tr>
-            <tr>
-              <td class="skill-label">Hardware, Repair & Lab Admin:</td>
-              <td class="skill-val">Computer Hardware Diagnostics, Board-Level Repair, OS Deployment (Windows/Linux), Lab Administration, LAN Cabling & Setup</td>
-            </tr>
-            <tr>
-              <td class="skill-label">AI & Modern Productivity Tools:</td>
-              <td class="skill-val">OpenAI API, ChatGPT, Claude, Cursor AI, VS Code, Technical Documentation, Pair Programming</td>
-            </tr>
-          </table>
-        </div>
+      let heightLeft = imgHeight;
+      let position = 0;
 
-        <!-- Referees Section (Table Format) -->
-        <div class="section">
-          <div class="section-title">REFEREES</div>
-          <table class="timeline-table">
-            <tr>
-              <td style="width: 50%; padding: 4px 10px 4px 0; vertical-align: top;">
-                <div class="inst-name">1. Chemutai Musau Gilbert</div>
-                <div class="inst-award">Director, Kween Modern High School</div>
-                <div class="role-desc">Tel: <strong>0772 426 800</strong></div>
-              </td>
-              <td style="width: 50%; padding: 4px 0 4px 10px; vertical-align: top;">
-                <div class="inst-name">2. Victor Mzee</div>
-                <div class="inst-award">CEO, ICT Centre</div>
-                <div class="role-desc">Tel: <strong>0779 977 942</strong></div>
-              </td>
-            </tr>
-            <tr>
-              <td style="width: 50%; padding: 6px 10px 4px 0; vertical-align: top;">
-                <div class="inst-name">3. Aggrey Chebet</div>
-                <div class="inst-award">Manager, Kapchemweny Stationery</div>
-                <div class="role-desc">Tel: <strong>0778 301 998</strong></div>
-              </td>
-              <td style="width: 50%; padding: 6px 0 4px 10px; vertical-align: top;">
-                <div class="inst-name">4. Josh Wanda</div>
-                <div class="inst-award">Head Of ICT, Welile Technologies Limited</div>
-                <div class="role-desc">Tel: <strong>0704 825 473</strong></div>
-              </td>
-            </tr>
-          </table>
-        </div>
+      // Add first page
+      pdf.addImage(
+        canvas.toDataURL('image/jpeg', 0.98),
+        'JPEG',
+        0,
+        position,
+        imgWidth,
+        imgHeight,
+        undefined,
+        'FAST'
+      );
+      heightLeft -= pdfHeight;
 
-        <script>
-          window.onload = function() {
-            setTimeout(function() {
-              window.print();
-            }, 300);
-          };
-        </script>
-      </body>
-      </html>
-    `;
+      // Add remaining pages if content overflows A4 height
+      while (heightLeft > 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(
+          canvas.toDataURL('image/jpeg', 0.98),
+          'JPEG',
+          0,
+          position,
+          imgWidth,
+          imgHeight,
+          undefined,
+          'FAST'
+        );
+        heightLeft -= pdfHeight;
+      }
 
-    printWindow.document.open();
-    printWindow.document.write(htmlContent);
-    printWindow.document.close();
+      // Automatically trigger direct file download
+      pdf.save('Chemayek_Abraham_Curriculum_Vitae.pdf');
+
+      confetti({
+        particleCount: 80,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#3b82f6', '#06b6d4', '#ffffff', '#60a5fa']
+      });
+
+      setDownloadSuccess(true);
+      setTimeout(() => setDownloadSuccess(false), 4000);
+    } catch (error) {
+      console.error('Failed to generate PDF:', error);
+      alert('Unable to generate PDF automatically. Please try again.');
+    } finally {
+      setIsGeneratingPDF(false);
+    }
   };
 
   return (
@@ -502,10 +531,31 @@ export const Resume: React.FC = () => {
           {/* Download button */}
           <button
             onClick={handleDownloadPDF}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-600/20 hover:-translate-y-0.5 transition-all"
+            disabled={isGeneratingPDF}
+            className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white transition-all ${
+              isGeneratingPDF
+                ? 'bg-blue-500/80 cursor-wait'
+                : downloadSuccess
+                ? 'bg-emerald-600 hover:bg-emerald-700 shadow-md shadow-emerald-600/20'
+                : 'bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-600/20 hover:-translate-y-0.5'
+            }`}
           >
-            <Download className="w-4 h-4" />
-            <span>{downloadSuccess ? 'PDF Ready to Print / Save!' : 'Download PDF Resume'}</span>
+            {isGeneratingPDF ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                <span>Generating PDF...</span>
+              </>
+            ) : downloadSuccess ? (
+              <>
+                <CheckCircle2 className="w-4 h-4" />
+                <span>Downloaded Successfully!</span>
+              </>
+            ) : (
+              <>
+                <Download className="w-4 h-4" />
+                <span>Download PDF Resume</span>
+              </>
+            )}
           </button>
         </div>
 
