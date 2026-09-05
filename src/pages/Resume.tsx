@@ -308,10 +308,17 @@ export const Resume: React.FC = () => {
               </td>
             </tr>
             <tr>
-              <td class="col-year">Completed</td>
+              <td class="col-year">2017 - 2020</td>
               <td class="col-content">
                 <div class="inst-name">Kapchorwa Town View Secondary School</div>
                 <div class="inst-award">Uganda Certificate of Education (Senior Four / UCE)</div>
+              </td>
+            </tr>
+            <tr>
+              <td class="col-year">2010 - 2016</td>
+              <td class="col-content">
+                <div class="inst-name">Alpha Nursery & Primary School</div>
+                <div class="inst-award">Primary Leaving Examination (PLE) / Primary Education</div>
               </td>
             </tr>
           </table>

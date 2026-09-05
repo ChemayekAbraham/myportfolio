@@ -470,17 +470,33 @@ export const EXPERIENCE_ITEMS: ExperienceItem[] = [
   },
   {
     id: 'edu-uce-sec',
-    period: 'Completed O-Level',
+    period: '2017 - 2020',
     role: 'Uganda Certificate of Education (Senior Four / UCE)',
     company: 'Kapchorwa Town View Secondary School',
     location: 'Kapchorwa, Uganda',
     type: 'education',
-    description: 'Uganda Certificate of Education (UCE / Senior Four) secondary school graduation.',
+    description: 'Senior One to Senior Four secondary education, graduating with the Uganda Certificate of Education (UCE).',
     achievements: [
-      'Sat for Senior Four (UCE) national examinations at Kapchorwa Town View Secondary School',
-      'Built strong academic foundation in English, Mathematics, Sciences, and ICT'
+      'Completed Senior One through Senior Four secondary curriculum',
+      'Attained Uganda Certificate of Education (UCE) certification',
+      'Built strong academic foundation in English, Mathematics, Sciences, and Computing'
     ],
     technologies: ['Uganda Certificate of Education', 'Senior Four', 'Kapchorwa Town View']
+  },
+  {
+    id: 'edu-primary',
+    period: '2010 - 2016',
+    role: 'Primary Leaving Examination (PLE)',
+    company: 'Alpha Nursery & Primary School',
+    location: 'Uganda',
+    type: 'education',
+    description: 'Nursery to Primary Seven foundational education, successfully completing Primary Leaving Examinations (PLE).',
+    achievements: [
+      'Completed full primary cycle from Nursery through Primary Seven',
+      'Successfully sat and passed Primary Leaving Examinations (PLE)',
+      'Built foundational communication, arithmetic, and problem-solving skills'
+    ],
+    technologies: ['Primary Education', 'PLE', 'Alpha Nursery & Primary']
   }
 ];
 
