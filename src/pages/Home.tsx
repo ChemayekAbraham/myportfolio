@@ -415,18 +415,18 @@ export const Home: React.FC = () => {
       {/* ================= CALL TO ACTION BANNER ================= */}
       <section className="py-12 sm:py-14 relative bg-transparent">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative rounded-3xl bg-[#141414] border border-blue-500/30 p-6 sm:p-10 lg:p-12 overflow-hidden shadow-2xl">
+          <div className="relative rounded-3xl bg-white dark:bg-[#141414] border border-blue-200 dark:border-blue-500/30 p-6 sm:p-10 lg:p-12 overflow-hidden shadow-xl dark:shadow-2xl">
             <div className="relative z-10 text-center max-w-2xl mx-auto space-y-4 sm:space-y-5">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 text-xs font-semibold">
-                <Rocket className="w-3.5 h-3.5" />
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-100 dark:bg-blue-500/20 text-blue-800 dark:text-blue-300 border border-blue-300 dark:border-blue-500/30 text-xs font-bold tracking-wide shadow-xs">
+                <Rocket className="w-3.5 h-3.5 text-blue-700 dark:text-blue-400" />
                 <span>Let's Build Something Exceptional</span>
               </div>
 
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white leading-tight">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white leading-tight">
                 Have a project or vision in mind?
               </h2>
 
-              <p className="text-gray-300 text-xs sm:text-sm leading-relaxed">
+              <p className="text-slate-600 dark:text-gray-300 text-xs sm:text-sm leading-relaxed">
                 Whether you need a full-scale web application, digital media production, e-commerce marketplace, or custom software architecture — I am ready to bring it to life.
               </p>
 
@@ -441,9 +441,9 @@ export const Home: React.FC = () => {
 
                 <a
                   href={`mailto:${PERSONAL_INFO.email}`}
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm sm:text-base font-semibold text-gray-200 hover:text-white bg-[#1a1a1a] hover:bg-[#252525] border border-gray-800 transition-all"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm sm:text-base font-semibold text-slate-700 dark:text-gray-200 hover:text-slate-900 dark:hover:text-white bg-gray-100 dark:bg-[#1a1a1a] hover:bg-gray-200 dark:hover:bg-[#252525] border border-gray-300 dark:border-gray-800 transition-all"
                 >
-                  <Mail className="w-4 h-4 text-blue-400" />
+                  <Mail className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                   <span>{PERSONAL_INFO.email}</span>
                 </a>
               </div>
