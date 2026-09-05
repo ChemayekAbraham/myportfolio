@@ -517,7 +517,7 @@ export const REFERENCES: Referee[] = [
   {
     name: 'Josh Wanda',
     role: 'Head Of ICT',
-    organization: 'Well Technologies Limited',
+    organization: 'Welile Technologies Limited',
     phone: '+256704825473',
     phoneFormatted: '0704 825 473'
   }

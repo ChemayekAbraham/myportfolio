@@ -419,7 +419,7 @@ export const Resume: React.FC = () => {
               </td>
               <td style="width: 50%; padding: 6px 0 4px 10px; vertical-align: top;">
                 <div class="inst-name">4. Josh Wanda</div>
-                <div class="inst-award">Head Of ICT, Well Technologies Limited</div>
+                <div class="inst-award">Head Of ICT, Welile Technologies Limited</div>
                 <div class="role-desc">Tel: <strong>0704 825 473</strong></div>
               </td>
             </tr>
