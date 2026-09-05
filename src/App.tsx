@@ -3,6 +3,7 @@ import { ThemeProvider } from './context/ThemeContext';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
+import { InstallPrompt } from './components/InstallPrompt';
 import { Home } from './pages/Home';
 import { About } from './pages/About';
 import { Services } from './pages/Services';
@@ -48,6 +49,9 @@ export function App() {
 
           {/* Floating WhatsApp Action Button */}
           <FloatingWhatsApp />
+
+          {/* PWA Mobile Install Alert Banner */}
+          <InstallPrompt />
 
           {/* Footer */}
           <Footer />
