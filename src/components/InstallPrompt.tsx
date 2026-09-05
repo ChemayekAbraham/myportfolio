@@ -64,25 +64,35 @@ export const InstallPrompt: React.FC = () => {
   }, []);
 
   const handleInstallClick = async () => {
-    if (deferredPrompt) {
-      try {
-        await deferredPrompt.prompt();
-        await deferredPrompt.userChoice;
-      } catch (err) {
-        console.error('Install prompt error:', err);
-      }
-      setDeferredPrompt(null);
+    if (!deferredPrompt) {
+      return;
     }
 
-    // Immediately trigger download/install confirmation & celebration
-    setIsInstalledSuccess(true);
-    confetti({
-      particleCount: 100,
-      spread: 80,
-      origin: { y: 0.8 },
-      colors: ['#3b82f6', '#10b981', '#60a5fa', '#ffffff']
-    });
-    localStorage.setItem('pwa_app_installed', 'true');
+    try {
+      await deferredPrompt.prompt();
+      const choiceResult = await deferredPrompt.userChoice;
+
+      // ONLY show success when the user actually accepts and confirms the install dialog
+      if (choiceResult && choiceResult.outcome === 'accepted') {
+        setIsInstalledSuccess(true);
+        confetti({
+          particleCount: 100,
+          spread: 80,
+          origin: { y: 0.8 },
+          colors: ['#3b82f6', '#10b981', '#60a5fa', '#ffffff']
+        });
+        localStorage.setItem('pwa_app_installed', 'true');
+      } else {
+        // User cancelled or dismissed the install prompt
+        setShowPrompt(false);
+        sessionStorage.setItem('pwa_install_dismissed_session', 'true');
+      }
+    } catch (err) {
+      console.error('Install prompt error:', err);
+      setShowPrompt(false);
+    } finally {
+      setDeferredPrompt(null);
+    }
   };
 
   const handleContinueInApp = () => {
