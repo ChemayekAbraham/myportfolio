@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
   :root {
     --font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -7,14 +9,36 @@
     --font-script: 'Caveat', cursive;
   }
 
-  body {
+  html, body {
     font-family: var(--font-sans);
+    overflow-x: hidden;
+    max-width: 100vw;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  /* Default Light Mode Styles */
+  html:not(.dark), html.light, html:not(.dark) body, html.light body {
+    background-color: #f8fafc;
+    color: #1e293b;
+  }
+
+  /* Dark Mode Styles */
+  html.dark, html.dark body {
     background-color: #0d0d0d;
     color: #f3f4f6;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
+  }
+
+  html:not(.dark) h1,
+  html:not(.dark) h2,
+  html:not(.dark) h3,
+  html:not(.dark) h4,
+  html:not(.dark) h5,
+  html:not(.dark) h6 {
+    color: #0f172a;
   }
 }
 
@@ -26,45 +50,169 @@
   font-family: 'Outfit', sans-serif !important;
 }
 
-/* Custom glowing effects */
-.glow-pink {
-  box-shadow: 0 0 25px -5px rgba(236, 72, 153, 0.4);
+/* Navigation in Light Mode */
+html:not(.dark) nav {
+  background-color: rgba(255, 255, 255, 0.96) !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 4px 20px -4px rgba(15, 23, 42, 0.05);
 }
 
-.glow-pink-lg {
-  box-shadow: 0 0 50px -10px rgba(236, 72, 153, 0.35);
+html:not(.dark) .nav-link {
+  color: #334155 !important;
+}
+
+html:not(.dark) .nav-link.active,
+html:not(.dark) .nav-link:hover {
+  color: #2563eb !important;
+}
+
+html:not(.dark) .bg-\[\#0d0d0d\],
+html:not(.dark) .bg-\[\#0a0a0a\],
+html:not(.dark) .bg-\[\#0f0f0f\],
+html:not(.dark) .bg-\[\#080808\] {
+  background-color: #f8fafc !important;
+}
+
+/* Main outer cards */
+html:not(.dark) .bg-\[\#121212\],
+html:not(.dark) .bg-\[\#111111\] {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 4px 24px -2px rgba(15, 23, 42, 0.06);
+}
+
+/* Inner cards and item pills */
+html:not(.dark) .bg-\[\#141414\],
+html:not(.dark) .bg-\[\#161616\],
+html:not(.dark) .bg-\[\#181818\],
+html:not(.dark) .bg-\[\#1a1a1a\],
+html:not(.dark) .bg-\[\#1c1c1c\],
+html:not(.dark) .bg-\[\#202020\] {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+
+/* Text overrides in Light Mode */
+html:not(.dark) .text-white {
+  color: #0f172a !important;
+}
+
+/* Solid Blue CTA Buttons retain crisp white text */
+html:not(.dark) .bg-blue-600,
+html:not(.dark) .bg-blue-500,
+html:not(.dark) button.bg-blue-600,
+html:not(.dark) a.bg-blue-600,
+html:not(.dark) .bg-blue-600 .text-white,
+html:not(.dark) .bg-blue-600 span {
+  color: #ffffff !important;
+}
+
+html:not(.dark) .text-gray-100,
+html:not(.dark) .text-gray-200,
+html:not(.dark) .text-gray-300 {
+  color: #334155 !important;
+}
+
+html:not(.dark) .text-gray-400 {
+  color: #475569 !important;
+}
+
+html:not(.dark) .text-gray-500 {
+  color: #64748b !important;
+}
+
+html:not(.dark) .border-gray-800,
+html:not(.dark) .border-gray-800\/80,
+html:not(.dark) .border-gray-800\/90,
+html:not(.dark) .border-gray-800\/70,
+html:not(.dark) .border-gray-800\/60,
+html:not(.dark) .border-gray-800\/40,
+html:not(.dark) .border-gray-700,
+html:not(.dark) .border-gray-700\/60 {
+  border-color: #e2e8f0 !important;
+}
+
+/* Input Fields in Light Mode */
+html:not(.dark) input,
+html:not(.dark) select,
+html:not(.dark) textarea {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border: 1.5px solid #cbd5e1 !important;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+html:not(.dark) input:focus,
+html:not(.dark) select:focus,
+html:not(.dark) textarea:focus {
+  border-color: #2563eb !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
+}
+
+html:not(.dark) input::placeholder,
+html:not(.dark) textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+html:not(.dark) .bg-grid-pattern {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+}
+
+html:not(.dark) .text-gradient {
+  color: #0f172a;
+}
+
+html:not(.dark) ::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+html:not(.dark) ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+}
+
+html:not(.dark) ::-webkit-scrollbar-thumb:hover {
+  background: #3b82f6;
+}
+
+/* Custom glowing effects */
+.glow-blue {
+  box-shadow: 0 4px 14px -2px rgba(59, 130, 246, 0.25);
+}
+
+.glow-blue-lg {
+  box-shadow: 0 6px 20px -3px rgba(59, 130, 246, 0.25);
 }
 
 .glow-subtle {
-  box-shadow: 0 0 30px -10px rgba(236, 72, 153, 0.15);
+  box-shadow: 0 2px 10px -2px rgba(59, 130, 246, 0.12);
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, #ffffff 0%, #d1d5db 50%, #9ca3af 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #ffffff;
 }
 
-.text-pink-gradient {
-  background: linear-gradient(135deg, #f472b6 0%, #ec4899 50%, #db2777 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.text-blue-gradient {
+  color: #3b82f6;
 }
 
 /* Background grid pattern */
 .bg-grid-pattern {
   background-size: 40px 40px;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
 }
 
 .bg-radial-gradient {
-  background: radial-gradient(circle at 50% 0%, rgba(236, 72, 153, 0.12) 0%, transparent 60%);
+  display: none;
 }
 
 .bg-radial-bottom {
-  background: radial-gradient(circle at 50% 100%, rgba(236, 72, 153, 0.08) 0%, transparent 50%);
+  display: none;
 }
 
 /* Custom Scrollbar */
@@ -77,12 +225,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2a2a2a;
+  background: #222222;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #ec4899;
+  background: #3b82f6;
 }
 
 /* Animations */

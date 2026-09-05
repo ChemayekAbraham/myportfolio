@@ -20,10 +20,9 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
   const isCenter = align === 'center';
 
   return (
-    <div className={`mb-12 md:mb-16 ${isCenter ? 'text-center max-w-3xl mx-auto' : 'max-w-3xl'} ${className}`}>
+    <div className={`mb-8 md:mb-10 ${isCenter ? 'text-center max-w-3xl mx-auto' : 'max-w-3xl'} ${className}`}>
       {badge && (
-        <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-pink-500/10 border border-pink-500/20 text-pink-400 text-xs font-semibold tracking-wider uppercase mb-4 ${isCenter ? 'mx-auto' : ''}`}>
-          <span className="w-1.5 h-1.5 rounded-full bg-pink-500 animate-pulse"></span>
+        <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20 text-blue-600 dark:text-blue-400 text-xs font-semibold tracking-wider uppercase mb-3 ${isCenter ? 'mx-auto' : ''}`}>
           <span>{badge}</span>
         </div>
       )}
@@ -31,7 +30,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
       <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight">
         {title}{' '}
         {highlightedText && (
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-rose-400 to-pink-400">
+          <span className="text-blue-600 dark:text-blue-400">
             {highlightedText}
           </span>
         )}

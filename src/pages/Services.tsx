@@ -32,7 +32,7 @@ export const Services: React.FC = () => {
   ];
 
   return (
-    <div className="pt-28 pb-24 overflow-hidden">
+    <div className="pt-20 pb-16 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
@@ -48,20 +48,20 @@ export const Services: React.FC = () => {
           {SERVICES.map((service) => (
             <div
               key={service.id}
-              className="group relative bg-[#121212] border border-gray-800/80 hover:border-pink-500/50 rounded-3xl p-8 transition-all duration-300 hover:shadow-2xl hover:shadow-pink-500/10 flex flex-col justify-between"
+              className="group relative bg-[#121212] border border-gray-800/80 hover:border-blue-500/50 rounded-3xl p-8 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/10 flex flex-col justify-between"
             >
               <div className="space-y-6">
                 {/* Icon */}
-                <div className="w-16 h-16 rounded-2xl bg-pink-500/10 border border-pink-500/30 flex items-center justify-center text-pink-400 group-hover:scale-110 group-hover:bg-pink-500 group-hover:text-white transition-all duration-300 shadow-lg">
+                <div className="w-16 h-16 rounded-2xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 shadow-lg">
                   <i className={`${service.icon} text-2xl`}></i>
                 </div>
 
                 {/* Titles */}
                 <div className="space-y-1">
-                  <span className="text-xs font-semibold text-pink-400 uppercase tracking-wider">
+                  <span className="text-xs font-semibold text-blue-400 uppercase tracking-wider">
                     {service.subtitle}
                   </span>
-                  <h3 className="text-2xl font-bold text-white group-hover:text-pink-400 transition-colors">
+                  <h3 className="text-2xl font-bold text-white group-hover:text-blue-400 transition-colors">
                     {service.title}
                   </h3>
                 </div>
@@ -79,7 +79,7 @@ export const Services: React.FC = () => {
                   <ul className="space-y-2 text-xs sm:text-sm text-gray-300">
                     {service.features.map((feature, i) => (
                       <li key={i} className="flex items-start gap-2.5">
-                        <CheckCircle2 className="w-4 h-4 text-pink-500 shrink-0 mt-0.5" />
+                        <CheckCircle2 className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
                         <span>{feature}</span>
                       </li>
                     ))}
@@ -91,7 +91,7 @@ export const Services: React.FC = () => {
               <div className="pt-6 mt-6 border-t border-gray-800/80">
                 <Link
                   to="/contact"
-                  className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-pink-400 hover:text-pink-300 group-hover:translate-x-1 transition-all"
+                  className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-blue-400 hover:text-blue-300 group-hover:translate-x-1 transition-all"
                 >
                   <span>Inquire About This Service</span>
                   <ArrowRight className="w-4 h-4" />
@@ -103,8 +103,6 @@ export const Services: React.FC = () => {
 
         {/* Workflow / Process Section */}
         <div className="mt-28 p-8 sm:p-12 lg:p-16 rounded-3xl bg-[#101010] border border-gray-800/80 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-pink-600/5 blur-3xl pointer-events-none rounded-full"></div>
-
           <SectionHeader
             badge="My Development Process"
             title="How I Bring Ideas"
@@ -116,9 +114,9 @@ export const Services: React.FC = () => {
             {workflowSteps.map((step) => (
               <div
                 key={step.step}
-                className="p-6 rounded-2xl bg-[#141414] border border-gray-800/80 hover:border-pink-500/40 transition-colors space-y-3 relative"
+                className="p-6 rounded-2xl bg-[#141414] border border-gray-800/80 hover:border-blue-500/40 transition-colors space-y-3 relative"
               >
-                <div className="text-3xl font-black text-pink-500/40 font-mono">
+                <div className="text-3xl font-black text-blue-500/40 font-mono">
                   {step.step}
                 </div>
                 <h4 className="text-lg font-bold text-white">
@@ -134,7 +132,7 @@ export const Services: React.FC = () => {
           <div className="mt-12 text-center">
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-sm sm:text-base font-semibold text-white bg-pink-600 hover:bg-pink-500 shadow-xl shadow-pink-600/25 transition-all"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-sm sm:text-base font-semibold text-white bg-blue-600 hover:bg-blue-500 shadow-xl shadow-blue-600/25 transition-all"
             >
               <span>Schedule a Project Consultation</span>
               <ArrowRight className="w-4 h-4" />
