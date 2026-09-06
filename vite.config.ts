@@ -10,7 +10,15 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'apple-touch-icon.png', 'pwa-192x192.png', 'pwa-512x512.png', 'images/profile.jpg'],
+      includeAssets: [
+        'favicon.svg',
+        'apple-touch-icon.png',
+        'pwa-192x192.png',
+        'pwa-512x512.png',
+        'images/profile.jpg',
+        'robots.txt',
+        'sitemap.xml'
+      ],
       manifest: {
         name: 'Chemayek Abraham | Software Developer & Media Specialist',
         short_name: 'Chemayek Abraham',

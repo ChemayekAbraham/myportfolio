@@ -1,0 +1,14 @@
+# Allow all search engine crawlers to index the site
+User-agent: *
+Allow: /
+
+# Googlebot specific directives
+User-agent: Googlebot
+Allow: /
+
+# Bingbot
+User-agent: Bingbot
+Allow: /
+
+# XML Sitemap Location
+Sitemap: https://chemayekabraham.vercel.app/sitemap.xml
