@@ -2,8 +2,72 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal, Trophy, BarChart3, Award, ExternalLink, Sparkles, Copy, Check } from 'lucide-react';
 import { triggerConfetti } from '../utils/confetti';
+import { sound } from '../utils/sound';
 
 type Tab = 'terminal' | 'stats' | 'trophies' | 'report';
+
+const TROPHIES = [
+  {
+    id: 'arch',
+    title: 'Master Systems Architect',
+    rank: 'S-TIER',
+    desc: 'Architected Welile School of AI & enterprise-grade web applications',
+    icon: '🏆',
+    stars: '★★★★★',
+    badgeClass: 'bg-amber-500/20 text-amber-500 border-amber-500/30',
+    xp: '+5,000 XP'
+  },
+  {
+    id: 'bug',
+    title: 'Artisanal Bug Crafter',
+    rank: 'LEGENDARY',
+    desc: 'Created & squashed 1,000+ bugs with zero production downtime',
+    icon: '🐛',
+    stars: '★★★★★',
+    badgeClass: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
+    xp: '+4,500 XP'
+  },
+  {
+    id: 'drone',
+    title: '4K Aerial Cine-Pilot',
+    rank: 'DIAMOND',
+    desc: 'Cinematic drone cinematography across Mount Elgon & East Africa',
+    icon: '🎥',
+    stars: '★★★★★',
+    badgeClass: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30',
+    xp: '+4,200 XP'
+  },
+  {
+    id: 'medic',
+    title: 'Hardware Surgeon',
+    rank: 'S-TIER',
+    desc: 'Precision motherboard repair, custom builds & laboratory administration',
+    icon: '🛠️',
+    stars: '★★★★★',
+    badgeClass: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
+    xp: '+3,800 XP'
+  },
+  {
+    id: 'stream',
+    title: 'Broadcast Stream Engineer',
+    rank: 'PLATINUM',
+    desc: 'Engineered high-fidelity live audio streaming infrastructure for Elgon Radio',
+    icon: '📻',
+    stars: '★★★★☆',
+    badgeClass: 'bg-rose-500/20 text-rose-400 border-rose-500/30',
+    xp: '+3,500 XP'
+  },
+  {
+    id: 'uganda',
+    title: 'Pearl of Africa Tech Vanguard',
+    rank: 'ELITE',
+    desc: 'Championing open source & youth technology literacy in Uganda 🇺🇬',
+    icon: '🇺🇬',
+    stars: '★★★★★',
+    badgeClass: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
+    xp: '+6,000 XP'
+  }
+];
 
 export const GithubIntelligenceTerminal: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>('terminal');
@@ -51,8 +115,11 @@ export const GithubIntelligenceTerminal: React.FC = () => {
             return (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as Tab)}
-                className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                onClick={() => {
+                  sound.playClick();
+                  setActiveTab(tab.id as Tab);
+                }}
+                className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
                   isActive
                     ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
                     : 'text-slate-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-white'
@@ -154,16 +221,55 @@ export const GithubIntelligenceTerminal: React.FC = () => {
               transition={{ duration: 0.25 }}
               className="space-y-4"
             >
-              <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-                Verified open-source repository achievements and commit streaks:
-              </p>
-              <div className="p-4 rounded-2xl bg-white dark:bg-[#121216] border border-gray-200 dark:border-gray-800/80 overflow-x-auto shadow-xs">
-                <img
-                  src="https://github-profile-trophy.vercel.app/?username=ChemayekAbraham&theme=radical&no-frame=true&no-bg=true&margin-w=10&margin-h=10&column=6"
-                  alt="GitHub Trophies"
-                  className="min-w-[600px] w-full"
-                  loading="lazy"
-                />
+              <div className="flex items-center justify-between pb-1">
+                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                  Tap any trophy to celebrate Chemayek’s milestones & achievements:
+                </p>
+                <span className="text-[11px] font-mono text-amber-500 font-bold hidden sm:inline">
+                  6/6 UNLOCKED
+                </span>
+              </div>
+
+              {/* Native High-Tech Trophy Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+                {TROPHIES.map((trophy) => (
+                  <motion.div
+                    key={trophy.id}
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => {
+                      sound.playChime();
+                      triggerConfetti();
+                    }}
+                    className="p-4 rounded-2xl bg-black/5 dark:bg-[#141419] border border-gray-200/80 dark:border-gray-800/80 hover:border-amber-500/50 transition-all cursor-pointer shadow-xs group relative overflow-hidden"
+                  >
+                    <div className="flex items-start justify-between gap-2 mb-2">
+                      <span className="text-3xl p-2 rounded-xl bg-black/5 dark:bg-white/5 border border-gray-200 dark:border-gray-800/80 group-hover:scale-110 transition-transform">
+                        {trophy.icon}
+                      </span>
+                      <div className="flex flex-col items-end gap-1">
+                        <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full border ${trophy.badgeClass}`}>
+                          {trophy.rank}
+                        </span>
+                        <span className="text-[10px] text-amber-400 tracking-widest font-mono">
+                          {trophy.stars}
+                        </span>
+                      </div>
+                    </div>
+
+                    <h4 className="text-sm font-bold text-slate-900 dark:text-white group-hover:text-amber-500 transition-colors">
+                      {trophy.title}
+                    </h4>
+                    <p className="text-xs text-slate-600 dark:text-gray-400 mt-1 leading-relaxed">
+                      {trophy.desc}
+                    </p>
+
+                    <div className="mt-3 pt-2.5 border-t border-gray-200/60 dark:border-gray-800/60 flex items-center justify-between text-[11px] font-mono">
+                      <span className="text-gray-400 dark:text-gray-500">Tap to inspect</span>
+                      <span className="font-bold text-amber-500">{trophy.xp}</span>
+                    </div>
+                  </motion.div>
+                ))}
               </div>
             </motion.div>
           )}

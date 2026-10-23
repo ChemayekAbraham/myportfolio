@@ -371,11 +371,21 @@
 
 <div align="center">
 
-## 🏆 My GitHub Trophy Cabinet
+## 🏆 Engineering Milestones & Trophy Cabinet
 
-💪 *Behold my open-source milestones & achievements* 💪
+💪 *Behold my open-source milestones & technical achievements* 💪
 
-<img src="https://github-profile-trophy.vercel.app/?username=ChemayekAbraham&theme=radical&no-frame=true&no-bg=true&margin-w=15&margin-h=15&column=7" width="100%" />
+<br>
+
+| 🏆 **Master Systems Architect** | 🐛 **Artisanal Bug Crafter** | 🎥 **4K Aerial Cine-Pilot** |
+| :---: | :---: | :---: |
+| `RANK: S-TIER` • Welile AI & Web | `RANK: LEGENDARY` • 1,000+ Fixed | `RANK: DIAMOND` • Drone Cinematography |
+| ★★★★★ | ★★★★★ | ★★★★★ |
+
+| 🛠️ **Hardware Medic & Surgeon** | 📻 **Broadcast Streaming Engineer** | 🇺🇬 **Pearl of Africa Vanguard** |
+| :---: | :---: | :---: |
+| `RANK: S-TIER` • Motherboard & Lab Admin | `RANK: PLATINUM` • Elgon Radio Audio | `RANK: ELITE` • Uganda Tech Vanguard |
+| ★★★★★ | ★★★★☆ | ★★★★★ |
 
 <br>
 <img src="https://media.giphy.com/media/3o6fJ1BM7R2EBRDnxK/giphy.gif" width="200">
