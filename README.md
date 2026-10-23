@@ -29,7 +29,7 @@
 
 <br>
 
-> **Plot twist:** I write clean code, fly 4K camera drones, and resurrect dead motherboards for a living.
+> **Plot twist:** I write clean code, fly 4K camera drones, and resurrect dead motherboards for a living 😂🤣.
 
 <br>
 
@@ -56,11 +56,11 @@
 
 ### Hey there! I'm **Chemayek Abraham** 👋
 
-- 💻 **Full-Stack Dev** — Turning coffee into apps like **[welileapp.com](https://welileapp.com)** (and fixing bugs before anyone notices).
-- 🎥 **Drone Pilot & Video Guy** — Flying in 4K. If Premiere Pro crashes, I pretend it was a stylistic choice.
-- 🔧 **Hardware Surgeon** — 5+ years resurrecting dead PCs. Turning it off and on again is my cardio.
-- 🌍 **Based in Uganda 🇺🇬** — Powered by Mount Elgon coffee ☕ & 3 AM sudden inspiration.
-- 🏆 **CEO of** — *"It works on my machine AND in production (most days)."*
+- 💻 **Full-Stack Dev** — Turning coffee into apps like **[welileapp.com](https://welileapp.com)** (and fixing bugs before anyone notices 😂).
+- 🎥 **Drone Pilot & Video Guy** — Flying in 4K. If Premiere Pro crashes, I pretend it was a stylistic choice 🤣💀.
+- 🔧 **Hardware Surgeon** — 5+ years resurrecting dead PCs. Turning it off and on again is my cardio 😭😂.
+- 🌍 **Based in Uganda 🇺🇬** — Powered by Mount Elgon coffee ☕ & 3 AM sudden inspiration 😆.
+- 🏆 **CEO of** — *"It works on my machine AND in production (most days... hopefully) 🤣🙌."*
 
 </td>
 </tr>
@@ -72,15 +72,15 @@
 <table>
 <tr>
 <td align="center">
-<b>Me explaining architecture to the team</b><br><br>
+<b>Me explaining architecture to the team 😂</b><br><br>
 <img src="https://media.giphy.com/media/gEvab1ilmJjA82FaSV/giphy.gif" width="220">
 </td>
 <td align="center">
-<b>Senior devs seeing my clean TypeScript</b><br><br>
+<b>Senior devs seeing my clean TypeScript 🤣</b><br><br>
 <img src="https://media.giphy.com/media/l3q2K5jinAlChoCLS/giphy.gif" width="220">
 </td>
 <td align="center">
-<b>My deployed code in production</b><br><br>
+<b>My deployed code in production 💀😭</b><br><br>
 <img src="https://media.giphy.com/media/dJYoOVAWf2QkU/giphy.gif" width="220">
 </td>
 </tr>
@@ -108,7 +108,7 @@
 <br>
 *Sees 47 errors*
 <br>
-*"This is fine"* 🔥
+*"This is fine"* 🔥😭
 
 </td>
 <td align="center" width="200">
@@ -120,7 +120,7 @@
 <br>
 *Creates 7 more*
 <br>
-*"I'm a genius"* 🧠
+*"I'm a genius"* 🧠🤣
 
 </td>
 <td align="center" width="200">
@@ -132,7 +132,7 @@
 <br>
 *First result from 2011*
 <br>
-*Still works* 💀
+*Still works* 💀😂
 
 </td>
 <td align="center" width="200">
@@ -144,7 +144,7 @@
 <br>
 *EVERYTHING WORKS*
 <br>
-*I'M A GOD* ⚡
+*I'M A GOD* ⚡😆
 
 </td>
 </tr>
@@ -162,7 +162,7 @@
 </div>
 
 <details>
-<summary>🤣 Click here if your code doesn't work (spoiler: it never does on first try)</summary>
+<summary>🤣 Click here if your code doesn't work (spoiler: it never does on first try 😭😂)</summary>
 
 <br>
 
@@ -176,16 +176,16 @@
 
 ```
 🩺 Doctor: "Where does it hurt?"
-💻 Me: *points at node_modules*
+💻 Me: *points at node_modules* 😭
 
 🩺 Doctor: "How long has this been going on?"
-💻 Me: "Since npm install"
+💻 Me: "Since npm install" 💀
 
 🩺 Doctor: "Have you tried turning it off and on again?"
-💻 Me: "I am a computer technician... that's my superpower"
+💻 Me: "I am a computer technician... that's my superpower" 😂🤣
 
 🩺 Doctor: "I'm prescribing you some well-deserved rest"
-💻 Me: "ERROR: rest is not defined in async scope"
+💻 Me: "ERROR: rest is not defined in async scope" 🤣💀
 ```
 
 </div>
@@ -193,7 +193,7 @@
 </details>
 
 <details>
-<summary>🧘 Click here for Developer Meditation (You'll Need It)</summary>
+<summary>🧘 Click here for Developer Meditation (You'll Need It 😂)</summary>
 
 <br>
 
@@ -212,11 +212,11 @@
 
 ...
 
-"Okay maybe it was a missing semicolon"
-"Or maybe an unhandled Promise rejection"
-"npm run build will fix everything"
-"If not, git reset --hard HEAD~1"
-"May the compiler be with you"
+"Okay maybe it was a missing semicolon 😂"
+"Or maybe an unhandled Promise rejection 💀"
+"npm run build will fix everything 😭"
+"If not, git reset --hard HEAD~1 🤣"
+"May the compiler be with you 🙏"
 ```
 
 </div>
@@ -312,7 +312,7 @@
 <br>
 *"There's no way*
 *this is a bug,*
-*my code is perfect"*
+*my code is perfect"* 🤡😂
 
 </td>
 <td align="center" width="180">
@@ -324,7 +324,7 @@
 *"WHO WROTE THIS*
 *GARBAGE CODE?!"*
 <br>
-*git blame: it was me*
+*git blame: it was me* 💀🤣
 
 </td>
 <td align="center" width="180">
@@ -335,7 +335,7 @@
 <br>
 *"Dear God, if this*
 *build passes, I'll*
-*write unit tests"*
+*write unit tests"* 😭🙏
 
 </td>
 <td align="center" width="180">
@@ -348,7 +348,7 @@
 <br>
 *"Open to work"*
 <br>
-*Maybe drone piloting?*
+*Maybe drone piloting?* 😭😂
 
 </td>
 <td align="center" width="180">
@@ -359,7 +359,7 @@
 <br>
 *"It's not a bug,*
 *it's an undocumented*
-*delightful feature"* 🚀
+*delightful feature"* 🚀🤣
 
 </td>
 </tr>
@@ -514,9 +514,9 @@
 
 <br>
 
-> *"It works on my machine, on the server, and in the lab."* — Chemayek  
+> *"It works on my machine, on the server, and in the lab."* — Chemayek 😂  
 > *"Code is poetry, 4K video is art, and a freshly repaired PC is pure satisfaction."*  
-> *"Just one more commit before bed"* — Famous last words at 1 AM. It's now 5 AM.  
+> *"Just one more commit before bed"* — Famous last words at 1 AM. It's now 5 AM 💀🤣.  
 > *"Clean code isn't written by accident, it's crafted with relentless care."*
 
 <br>
