@@ -553,6 +553,11 @@ export const Resume: React.FC = () => {
                 <CheckCircle2 className="w-4 h-4" />
                 <span>Downloaded Successfully!</span>
               </>
+            ) : (
+              <>
+                <Download className="w-4 h-4" />
+                <span>Download CV (.PDF)</span>
+              </>
             )}
           </button>
         </div>
