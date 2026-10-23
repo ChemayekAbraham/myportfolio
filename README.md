@@ -91,56 +91,6 @@
 
 </div>
 
----
-
-<div align="center">
-
-## 🎪 The "About Me" But Make It UNHINGED
-
-</div>
-
-```python
-class ChemayekAbraham(Developer, MediaCreator, HardwareSurgeon, CaffeineDependentLifeForm):
-    
-    def __init__(self):
-        self.name = "Chemayek Abraham"
-        self.username = "ChemayekAbraham"
-        self.location = "Kapchorwa, Uganda 🇺🇬 (timezone: EAT / whenever code deploys)"
-        self.iq = float('inf')  # benchmarked on Mount Elgon ⛰️
-        self.brain = "runs on parallel cores: Code + Cinematics + Hardware"
-        self.coffee_consumed_today = 99999
-        self.bugs_created = self.bugs_fixed - 1  # always ahead of the compiler 😤
-        self.core_skills = [
-            "Full-Stack Engineering (React, Next.js, Node, TypeScript, Python)",
-            "Drone Cinematography & 4K Video Production",
-            "Adobe Premiere Pro, Photoshop, After Effects & Filmora",
-            "Computer Hardware Repair & System Maintenance"
-        ]
-        self.flagship_platforms = ["welileapp.com", "Welile School of AI", "TA-TRACKS", "Elgon Radio"]
-        
-    def get_daily_schedule(self):
-        return {
-            "05:30": "☕ Mount Elgon coffee brewing. Code ideas loading into RAM.",
-            "06:00": "Alarm rings. Hit snooze. Dreaming in clean TypeScript interfaces.",
-            "08:30": "Wake up. Open VS Code & Premiere Pro. Fans spin up like jet turbines.",
-            "09:00": "Deploy clean update to welileapp.com. CI/CD green. Dopamine spike.",
-            "10:30": "Diagnose computer lab machines. Resurrect 2 laptops before lunch.",
-            "12:00": "Lunch break (watching drone cinematography & tech talks).",
-            "14:00": "Write 300 lines of robust Next.js code. Refactor into 50 lines.",
-            "15:30": "🚁 Drone check: Capturing majestic aerial views over Kapchorwa.",
-            "17:00": "Render video queue while reviewing pull requests.",
-            "20:00": "'Just one small tweak before dinner' — greatest lie in history.",
-            "23:00": "Find an edge-case bug. Can't sleep until it's patched.",
-            "02:00": "IT FINALLY WORKS!! *touches nothing ever again*",
-            "02:30": "Git push origin main. Sleep peacefully like a legend."
-        }
-    
-    def introduction(self):
-        return "I craft high-performance code, shoot cinematic films, and repair computers 24/7!"
-    
-    def superpower(self):
-        return "Can diagnose a software race condition and a damaged motherboard capacitor in under 60 seconds."
-```
 
 ---
 
