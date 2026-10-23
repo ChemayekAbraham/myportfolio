@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { 
   ArrowRight, 
-  Code2, 
   Mail, 
   Download, 
   CheckCircle2, 
@@ -11,11 +10,7 @@ import {
   Rocket,
   Maximize2,
   X,
-  Sparkles,
-  Zap,
-  Globe,
-  Terminal,
-  ShieldCheck
+  Sparkles
 } from 'lucide-react';
 import { GithubIcon, LinkedinIcon, WhatsappIcon } from '../components/SocialIcons';
 import { PERSONAL_INFO, PROJECTS, SERVICES } from '../data/portfolioData';

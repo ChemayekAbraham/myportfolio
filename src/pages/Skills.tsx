@@ -8,8 +8,7 @@ import {
   Wrench, 
   ShieldCheck,
   CheckCircle2, 
-  Layers,
-  Sparkles
+  Layers
 } from 'lucide-react';
 import { SKILL_CATEGORIES } from '../data/portfolioData';
 import { SectionHeader } from '../components/SectionHeader';

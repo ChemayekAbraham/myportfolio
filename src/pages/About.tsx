@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { 
   Compass, 
   CheckCircle2, 
@@ -16,8 +15,7 @@ import {
   Phone, 
   UserCheck, 
   Maximize2, 
-  X,
-  Sparkles
+  X
 } from 'lucide-react';
 import { PERSONAL_INFO, PERSONAL_ATTRIBUTES } from '../data/portfolioData';
 import { SectionHeader } from '../components/SectionHeader';

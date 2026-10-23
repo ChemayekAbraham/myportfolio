@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { 
   Briefcase, 
   GraduationCap, 
@@ -10,8 +9,7 @@ import {
   UserCheck,
   Users,
   Phone,
-  Loader2,
-  Sparkles
+  Loader2
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import jsPDF from 'jspdf';

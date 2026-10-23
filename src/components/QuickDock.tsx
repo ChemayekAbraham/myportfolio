@@ -9,10 +9,10 @@ import {
   Sparkles, 
   Sun, 
   Moon, 
-  Github,
-  MessageCircle,
-  FileText
+  MessageCircle, 
+  FileText 
 } from 'lucide-react';
+import { GithubIcon } from './SocialIcons';
 import { useTheme } from '../context/ThemeContext';
 import { triggerConfetti, triggerFireworks } from '../utils/confetti';
 import { PERSONAL_INFO } from '../data/portfolioData';
@@ -37,7 +37,7 @@ export const QuickDock: React.FC = () => {
     { 
       name: 'GitHub', 
       href: PERSONAL_INFO.github, 
-      icon: Github, 
+      icon: GithubIcon, 
       isExternal: true 
     },
     {
