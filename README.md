@@ -57,6 +57,7 @@
 ### Hey there! I'm **Chemayek Abraham** 👋
 
 - 💻 **Full-Stack Dev** — Turning coffee into apps like **[welileapp.com](https://welileapp.com)** (and fixing bugs before anyone notices 😂).
+- 🐛 **Professional Bug Creator** — I create bugs with passion, then fix them at 3 AM like an absolute hero 😭🤣.
 - 🎥 **Drone Pilot & Video Guy** — Flying in 4K. If Premiere Pro crashes, I pretend it was a stylistic choice 🤣💀.
 - 🔧 **Hardware Surgeon** — 5+ years resurrecting dead PCs. Turning it off and on again is my cardio 😭😂.
 - 🌍 **Based in Uganda 🇺🇬** — Powered by Mount Elgon coffee ☕ & 3 AM sudden inspiration 😆.
@@ -279,6 +280,7 @@
 ╠══════════════════════════════════════════════════════════════╣
 ║                                                              ║
 ║  Full-Stack Dev:        A+++ (Next.js, React, Node, Python)  ║
+║  Bug Creation:          WORLD CLASS (Artisanal & handcrafted)║
 ║  Hardware Mastery:      S-TIER (Resurrects dead PCs daily)   ║
 ║  Drone & Media Craft:   A+++ (Cinematic 4K & Adobe Suite)    ║
 ║  Google-Fu:             LEGENDARY (Finds fix in 30 seconds)  ║
