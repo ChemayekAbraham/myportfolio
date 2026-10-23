@@ -56,14 +56,11 @@
 
 ### Hey there! I'm **Chemayek Abraham** 👋
 
-- 🎓 **Big brain energy** — Mastered the art of solving bugs before the compiler even notices them.
-- 💻 **Full-Stack Developer** — Engineering high-scale web apps like **[welileapp.com](https://welileapp.com)** and **Welile School of AI**.
-- 🎥 **Media & Drone Specialist** — Flying drones for aerial cinematography & editing across the full Adobe Creative Cloud suite (Premiere Pro, Photoshop, After Effects, Lightroom), Filmora & Vegas Pro.
-- 🔧 **Hardware Surgeon** — 5+ years diagnosing computer motherboard issues, power circuits, and resurrecting dead PCs.
-- 🧠 **200 IQ Moves:** I write code that is clean, type-safe, and self-documenting. That's called *engineering excellence*.
-- 🏆 **CEO of "It Works On My Machine AND In Production"**
-- 🌍 **Based in Uganda 🇺🇬** (Kapchorwa Municipality) — where the code runs on pure high-altitude mountain coffee & chai ☕
-- 🤓 **Fun fact:** I can debug a React hook memory leak while rendering a 4K drone video timeline and testing a computer lab network. That's real multi-threading!
+- 💻 **Full-Stack Dev** — Turning coffee into apps like **[welileapp.com](https://welileapp.com)** (and fixing bugs before anyone notices).
+- 🎥 **Drone Pilot & Video Guy** — Flying in 4K. If Premiere Pro crashes, I pretend it was a stylistic choice.
+- 🔧 **Hardware Surgeon** — 5+ years resurrecting dead PCs. Turning it off and on again is my cardio.
+- 🌍 **Based in Uganda 🇺🇬** — Powered by Mount Elgon coffee ☕ & 3 AM sudden inspiration.
+- 🏆 **CEO of** — *"It works on my machine AND in production (most days)."*
 
 </td>
 </tr>
