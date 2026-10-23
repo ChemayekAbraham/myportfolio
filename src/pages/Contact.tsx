@@ -7,13 +7,16 @@ import {
   CheckCircle2, 
   Clock,
   Phone,
-  Sparkles
+  Sparkles,
+  Copy,
+  Check
 } from 'lucide-react';
 import { GithubIcon, LinkedinIcon, WhatsappIcon } from '../components/SocialIcons';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { SectionHeader } from '../components/SectionHeader';
 import { TiltCard } from '../components/TiltCard';
 import { triggerFireworks, triggerConfetti } from '../utils/confetti';
+import { sound } from '../utils/sound';
 
 export const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -26,6 +29,24 @@ export const Contact: React.FC = () => {
 
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [copiedField, setCopiedField] = useState<'email' | 'phone' | null>(null);
+
+  const handleCopy = (text: string, field: 'email' | 'phone') => {
+    navigator.clipboard.writeText(text);
+    setCopiedField(field);
+    sound.playChime();
+    setTimeout(() => setCopiedField(null), 2000);
+  };
+
+  const applyPreset = (subject: string, message: string, service: string) => {
+    sound.playClick();
+    setFormData((prev) => ({
+      ...prev,
+      subject,
+      service,
+      message
+    }));
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -63,6 +84,7 @@ export const Contact: React.FC = () => {
 
       if (response.ok || data.success === 'true' || data.success === true) {
         setSubmitted(true);
+        sound.playChime();
         triggerFireworks();
       } else {
         throw new Error(data.message || 'Failed to deliver message directly.');
@@ -77,6 +99,7 @@ export const Contact: React.FC = () => {
       
       window.open(mailtoUrl, '_blank');
       setSubmitted(true);
+      sound.playChime();
       triggerFireworks();
     } finally {
       setLoading(false);
@@ -113,32 +136,50 @@ export const Contact: React.FC = () => {
                 </p>
 
                 <div className="space-y-3.5 pt-2">
-                  <div className="flex items-start gap-3.5 p-4 rounded-2xl bg-black/5 dark:bg-[#16161c] border border-gray-200 dark:border-gray-800/80 hover:border-blue-500/40 transition-colors">
-                    <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-500 shrink-0">
-                      <Mail className="w-5 h-5" />
+                  <div className="flex items-center justify-between p-4 rounded-2xl bg-black/5 dark:bg-[#16161c] border border-gray-200 dark:border-gray-800/80 hover:border-blue-500/40 transition-colors">
+                    <div className="flex items-start gap-3.5 min-w-0">
+                      <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-500 shrink-0">
+                        <Mail className="w-5 h-5" />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-xs text-gray-500 font-semibold uppercase">Email Address</div>
+                        <a
+                          href={`mailto:${PERSONAL_INFO.email}`}
+                          className="text-sm font-bold text-slate-900 dark:text-white hover:text-blue-500 transition-colors truncate block"
+                        >
+                          {PERSONAL_INFO.email}
+                        </a>
+                      </div>
                     </div>
-                    <div>
-                      <div className="text-xs text-gray-500 font-semibold uppercase">Email Address</div>
-                      <a
-                        href={`mailto:${PERSONAL_INFO.email}`}
-                        className="text-sm font-bold text-slate-900 dark:text-white hover:text-blue-500 transition-colors break-all"
-                      >
-                        {PERSONAL_INFO.email}
-                      </a>
-                    </div>
+                    <button
+                      onClick={() => handleCopy(PERSONAL_INFO.email, 'email')}
+                      className="p-2 rounded-xl text-slate-500 hover:text-blue-500 hover:bg-black/5 dark:hover:bg-white/5 transition-colors shrink-0 cursor-pointer"
+                      title="Copy Email"
+                    >
+                      {copiedField === 'email' ? (
+                        <span className="flex items-center gap-1 text-xs text-emerald-500 font-bold">
+                          <Check className="w-4 h-4" /> Copied
+                        </span>
+                      ) : (
+                        <Copy className="w-4 h-4" />
+                      )}
+                    </button>
                   </div>
 
                   <div className="flex items-start gap-3.5 p-4 rounded-2xl bg-black/5 dark:bg-[#16161c] border border-gray-200 dark:border-gray-800/80 hover:border-emerald-500/40 transition-colors">
                     <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-500 shrink-0">
                       <WhatsappIcon className="w-5 h-5" />
                     </div>
-                    <div>
+                    <div className="flex-1">
                       <div className="text-xs text-gray-500 font-semibold uppercase">WhatsApp Direct</div>
                       <a
                         href={PERSONAL_INFO.whatsapp}
                         target="_blank"
                         rel="noopener noreferrer"
-                        onClick={(e) => triggerConfetti(e)}
+                        onClick={(e) => {
+                          sound.playClick();
+                          triggerConfetti(e);
+                        }}
                         className="text-sm font-bold text-slate-900 dark:text-white hover:text-emerald-500 transition-colors"
                       >
                         {PERSONAL_INFO.phoneFormatted}
@@ -146,19 +187,34 @@ export const Contact: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-3.5 p-4 rounded-2xl bg-black/5 dark:bg-[#16161c] border border-gray-200 dark:border-gray-800/80 hover:border-blue-500/40 transition-colors">
-                    <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-500 shrink-0">
-                      <Phone className="w-5 h-5" />
+                  <div className="flex items-center justify-between p-4 rounded-2xl bg-black/5 dark:bg-[#16161c] border border-gray-200 dark:border-gray-800/80 hover:border-blue-500/40 transition-colors">
+                    <div className="flex items-start gap-3.5 min-w-0">
+                      <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-500 shrink-0">
+                        <Phone className="w-5 h-5" />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-xs text-gray-500 font-semibold uppercase">Direct Call / Phone</div>
+                        <a
+                          href={`tel:${PERSONAL_INFO.phone}`}
+                          className="text-sm font-bold text-slate-900 dark:text-white hover:text-blue-500 transition-colors truncate block"
+                        >
+                          {PERSONAL_INFO.phoneFormatted}
+                        </a>
+                      </div>
                     </div>
-                    <div>
-                      <div className="text-xs text-gray-500 font-semibold uppercase">Direct Call / Phone</div>
-                      <a
-                        href={`tel:${PERSONAL_INFO.phone}`}
-                        className="text-sm font-bold text-slate-900 dark:text-white hover:text-blue-500 transition-colors"
-                      >
-                        {PERSONAL_INFO.phoneFormatted}
-                      </a>
-                    </div>
+                    <button
+                      onClick={() => handleCopy(PERSONAL_INFO.phone, 'phone')}
+                      className="p-2 rounded-xl text-slate-500 hover:text-blue-500 hover:bg-black/5 dark:hover:bg-white/5 transition-colors shrink-0 cursor-pointer"
+                      title="Copy Phone"
+                    >
+                      {copiedField === 'phone' ? (
+                        <span className="flex items-center gap-1 text-xs text-emerald-500 font-bold">
+                          <Check className="w-4 h-4" /> Copied
+                        </span>
+                      ) : (
+                        <Copy className="w-4 h-4" />
+                      )}
+                    </button>
                   </div>
 
                   <div className="flex items-start gap-3.5 p-4 rounded-2xl bg-black/5 dark:bg-[#16161c] border border-gray-200 dark:border-gray-800/80">
@@ -278,7 +334,62 @@ export const Contact: React.FC = () => {
                     </div>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <>
+                    {/* Quick Project Starters (Tap to Autofill) */}
+                    <div className="mb-6 p-4 rounded-2xl bg-black/5 dark:bg-[#16161c] border border-gray-200 dark:border-gray-800/80 space-y-2.5">
+                      <div className="flex items-center gap-1.5 text-xs text-slate-700 dark:text-gray-300 font-semibold uppercase tracking-wider">
+                        <Sparkles className="w-3.5 h-3.5 text-blue-500" />
+                        <span>Quick Project Starters (Tap to Autofill):</span>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        <button
+                          type="button"
+                          onClick={() => applyPreset(
+                            'Full-Stack Web App Engineering',
+                            'Hi Chemayek, I have an upcoming web application project and would like to discuss system architecture, timelines, and implementation with you.',
+                            'Full-Stack Web Development'
+                          )}
+                          className="px-3 py-1.5 rounded-xl text-xs font-medium glass-card hover:border-blue-500/50 hover:text-blue-500 transition-all text-slate-700 dark:text-gray-300 cursor-pointer"
+                        >
+                          🚀 Web App / SaaS
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => applyPreset(
+                            'Bug Squashing & Performance Optimization',
+                            'Hi Chemayek, I heard you are a Professional Bug Creator & Squasher! We have performance bottlenecks and bugs in our codebase that need your debugging skills.',
+                            'Full-Stack Web Development'
+                          )}
+                          className="px-3 py-1.5 rounded-xl text-xs font-medium glass-card hover:border-emerald-500/50 hover:text-emerald-400 transition-all text-slate-700 dark:text-gray-300 cursor-pointer"
+                        >
+                          🐛 Squash Our Bugs
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => applyPreset(
+                            '4K Drone Cinematography & Video',
+                            'Hi Chemayek, we are looking for high-resolution aerial cinematography and video production for an upcoming event or commercial showcase.',
+                            'Cinematography & Drone Video'
+                          )}
+                          className="px-3 py-1.5 rounded-xl text-xs font-medium glass-card hover:border-cyan-500/50 hover:text-cyan-400 transition-all text-slate-700 dark:text-gray-300 cursor-pointer"
+                        >
+                          🎥 4K Drone Filming
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => applyPreset(
+                            'Hardware, Network & Lab Admin',
+                            'Hi Chemayek, I would like to consult with you regarding computer hardware maintenance, network infrastructure, or IT lab management.',
+                            'Hardware & Lab Admin'
+                          )}
+                          className="px-3 py-1.5 rounded-xl text-xs font-medium glass-card hover:border-purple-500/50 hover:text-purple-400 transition-all text-slate-700 dark:text-gray-300 cursor-pointer"
+                        >
+                          🛠️ Hardware & Lab
+                        </button>
+                      </div>
+                    </div>
+
+                    <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div className="space-y-2">
                         <label className="text-xs font-semibold text-slate-700 dark:text-gray-300 uppercase tracking-wider">
@@ -378,6 +489,7 @@ export const Contact: React.FC = () => {
                       )}
                     </button>
                   </form>
+                  </>
                 )}
               </div>
             </TiltCard>

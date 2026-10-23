@@ -1,12 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ArrowRight, Sun, Moon, Sparkles } from 'lucide-react';
+import { Menu, X, ArrowRight, Sun, Moon, Sparkles, Search, Bug } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { GithubIcon, LinkedinIcon, WhatsappIcon } from './SocialIcons';
 import { triggerConfetti } from '../utils/confetti';
+import { sound } from '../utils/sound';
 
-export const Navbar: React.FC = () => {
+interface NavbarProps {
+  onOpenCommandPalette?: () => void;
+  onOpenBugGame?: () => void;
+}
+
+export const Navbar: React.FC<NavbarProps> = ({
+  onOpenCommandPalette,
+  onOpenBugGame
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
@@ -98,6 +107,8 @@ export const Navbar: React.FC = () => {
                   <NavLink
                     key={link.name}
                     to={link.path}
+                    onClick={() => sound.playClick()}
+                    onMouseEnter={() => sound.playHover()}
                     className={`relative px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition-colors duration-200 ${
                       isActive 
                         ? 'text-white' 
@@ -119,9 +130,40 @@ export const Navbar: React.FC = () => {
 
             {/* Right CTA & Socials & Theme Toggle */}
             <div className="hidden md:flex items-center space-x-2.5">
+              {/* Command Palette Trigger */}
+              <button
+                onClick={() => {
+                  sound.playClick();
+                  if (onOpenCommandPalette) onOpenCommandPalette();
+                }}
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl glass-card text-slate-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 border border-gray-200 dark:border-gray-800/80 text-xs font-medium cursor-pointer hover:border-blue-500/40 transition-all shadow-xs"
+                title="Open Command Palette (⌘K)"
+              >
+                <Search className="w-3.5 h-3.5 text-blue-500" />
+                <span className="hidden lg:inline text-slate-500 dark:text-gray-400">Search</span>
+                <kbd className="px-1.5 py-0.5 text-[10px] font-mono font-bold rounded bg-black/5 dark:bg-white/10 text-slate-600 dark:text-gray-400 border border-gray-300 dark:border-gray-700">
+                  ⌘K
+                </kbd>
+              </button>
+
+              {/* Bug Squasher Trigger */}
+              <button
+                onClick={() => {
+                  sound.playSquash();
+                  if (onOpenBugGame) onOpenBugGame();
+                }}
+                className="p-2.5 rounded-xl glass-card hover:border-emerald-500/40 text-slate-700 dark:text-gray-300 hover:text-emerald-500 dark:hover:text-emerald-400 transition-all shadow-xs cursor-pointer"
+                title="Play Bug Squasher 3000 🐛"
+              >
+                <Bug className="w-4 h-4" />
+              </button>
+
               {/* Theme Toggle Button */}
               <button
-                onClick={toggleTheme}
+                onClick={() => {
+                  sound.playClick();
+                  toggleTheme();
+                }}
                 className="p-2.5 rounded-xl glass-card hover:border-blue-500/40 text-slate-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all shadow-xs focus:outline-none cursor-pointer"
                 title={theme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
                 aria-label="Toggle light/dark theme"
@@ -137,7 +179,10 @@ export const Navbar: React.FC = () => {
                 href="https://github.com/ChemayekAbraham"
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={(e) => triggerConfetti(e)}
+                onClick={(e) => {
+                  sound.playClick();
+                  triggerConfetti(e);
+                }}
                 className="p-2.5 text-slate-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 glass-card rounded-xl transition-all shadow-xs"
                 title="GitHub Profile"
               >
@@ -146,7 +191,10 @@ export const Navbar: React.FC = () => {
 
               <Link
                 to="/contact"
-                onClick={(e) => triggerConfetti(e)}
+                onClick={(e) => {
+                  sound.playClick();
+                  triggerConfetti(e);
+                }}
                 className="relative group inline-flex items-center gap-2 px-4 lg:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-600/25 hover:shadow-blue-600/40 hover:-translate-y-0.5 transition-all duration-200"
               >
                 <Sparkles className="w-3.5 h-3.5" />
@@ -155,8 +203,29 @@ export const Navbar: React.FC = () => {
               </Link>
             </div>
 
-            {/* Mobile menu button & Theme Toggle */}
-            <div className="flex md:hidden items-center space-x-2">
+            {/* Mobile menu button & Quick Controls */}
+            <div className="flex md:hidden items-center space-x-1.5">
+              <button
+                onClick={() => {
+                  sound.playClick();
+                  if (onOpenCommandPalette) onOpenCommandPalette();
+                }}
+                className="p-2 rounded-xl glass-card text-slate-700 dark:text-gray-300"
+                title="Search (⌘K)"
+              >
+                <Search className="w-4 h-4 text-blue-500" />
+              </button>
+
+              <button
+                onClick={() => {
+                  sound.playSquash();
+                  if (onOpenBugGame) onOpenBugGame();
+                }}
+                className="p-2 rounded-xl glass-card text-slate-700 dark:text-gray-300 text-emerald-500"
+                title="Bug Squasher"
+              >
+                <Bug className="w-4 h-4 text-emerald-400" />
+              </button>
               <button
                 onClick={toggleTheme}
                 className="p-2 rounded-xl glass-card text-slate-700 dark:text-gray-300 transition-colors focus:outline-none"

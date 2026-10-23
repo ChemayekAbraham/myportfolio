@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import { Navbar } from './components/Navbar';
@@ -5,6 +6,9 @@ import { Footer } from './components/Footer';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { InstallPrompt } from './components/InstallPrompt';
 import { QuickDock } from './components/QuickDock';
+import { MouseGlow } from './components/MouseGlow';
+import { CommandPalette } from './components/CommandPalette';
+import { BugSquasherGame } from './components/BugSquasherGame';
 import { Home } from './pages/Home';
 import { About } from './pages/About';
 import { Services } from './pages/Services';
@@ -14,10 +18,28 @@ import { Projects } from './pages/Projects';
 import { Contact } from './pages/Contact';
 
 export function App() {
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
+  const [isBugGameOpen, setIsBugGameOpen] = useState(false);
+
+  // Global hotkey for Cmd+K / Ctrl+K
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setIsCommandPaletteOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   return (
     <ThemeProvider>
       <Router>
         <div className="min-h-screen flex flex-col bg-[#0d0d0d] text-gray-100 font-sans selection:bg-blue-600 selection:text-white transition-colors duration-200 relative">
+          {/* Ambient Mouse Cursor Spotlight Follower */}
+          <MouseGlow />
+
           {/* Dark Mode Ambient Background Image with Reduced Opacity */}
           <div 
             className="fixed inset-0 pointer-events-none z-0 hidden dark:block overflow-hidden"
@@ -31,12 +53,15 @@ export function App() {
           </div>
 
           {/* Navigation */}
-          <Navbar />
+          <Navbar 
+            onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+            onOpenBugGame={() => setIsBugGameOpen(true)}
+          />
 
           {/* Main Routed Content */}
           <main className="flex-1 relative z-10">
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<Home onOpenBugGame={() => setIsBugGameOpen(true)} />} />
               <Route path="/about" element={<About />} />
               <Route path="/services" element={<Services />} />
               <Route path="/resume" element={<Resume />} />
@@ -48,8 +73,24 @@ export function App() {
             </Routes>
           </main>
 
+          {/* Global Interactive Command Palette (Cmd + K) */}
+          <CommandPalette 
+            isOpen={isCommandPaletteOpen}
+            onClose={() => setIsCommandPaletteOpen(false)}
+            onOpenBugGame={() => setIsBugGameOpen(true)}
+          />
+
+          {/* Interactive Bug Squasher 3000 Arcade Game */}
+          <BugSquasherGame 
+            isOpen={isBugGameOpen}
+            onClose={() => setIsBugGameOpen(false)}
+          />
+
           {/* Floating Quick Action Dock */}
-          <QuickDock />
+          <QuickDock 
+            onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+            onOpenBugGame={() => setIsBugGameOpen(true)}
+          />
 
           {/* Floating WhatsApp Action Button */}
           <FloatingWhatsApp />

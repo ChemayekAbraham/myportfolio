@@ -10,14 +10,25 @@ import {
   Sun, 
   Moon, 
   MessageCircle, 
-  FileText 
+  FileText,
+  Search,
+  Bug
 } from 'lucide-react';
 import { GithubIcon } from './SocialIcons';
 import { useTheme } from '../context/ThemeContext';
 import { triggerConfetti, triggerFireworks } from '../utils/confetti';
+import { sound } from '../utils/sound';
 import { PERSONAL_INFO } from '../data/portfolioData';
 
-export const QuickDock: React.FC = () => {
+interface QuickDockProps {
+  onOpenCommandPalette?: () => void;
+  onOpenBugGame?: () => void;
+}
+
+export const QuickDock: React.FC<QuickDockProps> = ({ 
+  onOpenCommandPalette, 
+  onOpenBugGame 
+}) => {
   const { theme, toggleTheme } = useTheme();
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
 
@@ -27,30 +38,58 @@ export const QuickDock: React.FC = () => {
     { name: 'Skills', path: '/skills', icon: Cpu, isRoute: true },
     { name: 'Resume', path: '/resume', icon: FileText, isRoute: true },
     { name: 'Contact', path: '/contact', icon: Send, isRoute: true },
+    {
+      name: 'Search ⌘K',
+      icon: Search,
+      isAction: true,
+      onClick: () => {
+        sound.playClick();
+        if (onOpenCommandPalette) onOpenCommandPalette();
+      }
+    },
+    {
+      name: 'Squash Bugs 🐛',
+      icon: Bug,
+      isAction: true,
+      onClick: () => {
+        sound.playSquash();
+        if (onOpenBugGame) onOpenBugGame();
+      }
+    },
     { 
       name: 'WhatsApp', 
       href: PERSONAL_INFO.whatsapp, 
       icon: MessageCircle, 
       isExternal: true,
-      onClick: (e: React.MouseEvent) => triggerConfetti(e)
+      onClick: (e: React.MouseEvent) => {
+        sound.playClick();
+        triggerConfetti(e);
+      }
     },
     { 
       name: 'GitHub', 
       href: PERSONAL_INFO.github, 
       icon: GithubIcon, 
-      isExternal: true 
+      isExternal: true,
+      onClick: () => sound.playClick()
     },
     {
       name: theme === 'dark' ? 'Light Mode' : 'Dark Mode',
       icon: theme === 'dark' ? Sun : Moon,
       isAction: true,
-      onClick: toggleTheme
+      onClick: () => {
+        sound.playClick();
+        toggleTheme();
+      }
     },
     {
       name: 'Celebrate 🎉',
       icon: Sparkles,
       isAction: true,
-      onClick: () => triggerFireworks()
+      onClick: () => {
+        sound.playChime();
+        triggerFireworks();
+      }
     }
   ];
 
@@ -68,7 +107,10 @@ export const QuickDock: React.FC = () => {
 
           const buttonContent = (
             <motion.div
-              onHoverStart={() => setHoveredIdx(idx)}
+              onHoverStart={() => {
+                setHoveredIdx(idx);
+                sound.playHover();
+              }}
               onHoverEnd={() => setHoveredIdx(null)}
               whileHover={{ scale: 1.2, y: -4 }}
               whileTap={{ scale: 0.95 }}

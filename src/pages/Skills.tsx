@@ -13,6 +13,7 @@ import {
 import { SKILL_CATEGORIES } from '../data/portfolioData';
 import { SectionHeader } from '../components/SectionHeader';
 import { TiltCard } from '../components/TiltCard';
+import { sound } from '../utils/sound';
 
 export const Skills: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -51,7 +52,10 @@ export const Skills: React.FC = () => {
             return (
               <button
                 key={cat.id}
-                onClick={() => setSelectedCategory(cat.id)}
+                onClick={() => {
+                  sound.playClick();
+                  setSelectedCategory(cat.id);
+                }}
                 className={`inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer ${
                   isSelected
                     ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
@@ -104,7 +108,8 @@ export const Skills: React.FC = () => {
                       {category.skills.map((skill) => (
                         <div
                           key={skill.name}
-                          className="p-4 sm:p-5 rounded-2xl bg-black/5 dark:bg-[#16161a] border border-gray-200/80 dark:border-gray-800/80 hover:border-blue-500/50 transition-all duration-200 hover:shadow-lg space-y-2 group"
+                          onMouseEnter={() => sound.playHover()}
+                          className="p-4 sm:p-5 rounded-2xl bg-black/5 dark:bg-[#16161a] border border-gray-200/80 dark:border-gray-800/80 hover:border-blue-500/50 hover:-translate-y-0.5 transition-all duration-200 hover:shadow-lg space-y-2 group cursor-default"
                         >
                           <div className="flex items-center gap-3">
                             <span className="w-10 h-10 rounded-xl bg-blue-500/10 dark:bg-[#202028] border border-blue-500/20 dark:border-gray-700/60 flex items-center justify-center text-blue-600 dark:text-blue-400 group-hover:text-white group-hover:bg-blue-600 transition-colors text-base shrink-0">
