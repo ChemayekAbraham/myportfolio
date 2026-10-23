@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { 
   Compass, 
   CheckCircle2, 
@@ -11,14 +12,17 @@ import {
   Zap, 
   MapPin, 
   Mail, 
-  Briefcase,
-  Phone,
-  UserCheck,
-  Maximize2,
-  X
+  Briefcase, 
+  Phone, 
+  UserCheck, 
+  Maximize2, 
+  X,
+  Sparkles
 } from 'lucide-react';
 import { PERSONAL_INFO, PERSONAL_ATTRIBUTES } from '../data/portfolioData';
 import { SectionHeader } from '../components/SectionHeader';
+import { TiltCard } from '../components/TiltCard';
+import { triggerConfetti } from '../utils/confetti';
 
 export const About: React.FC = () => {
   const [isImageModalOpen, setIsImageModalOpen] = useState<boolean>(false);
@@ -82,13 +86,13 @@ export const About: React.FC = () => {
           
           {/* Left Column: Bare Image Card & Quick Info */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="relative">
-              <div className="relative bg-white dark:bg-[#141414] border border-gray-200 dark:border-gray-800 rounded-3xl p-6 sm:p-8 space-y-6 shadow-sm dark:shadow-xl">
+            <TiltCard glowColor="rgba(59, 130, 246, 0.25)">
+              <div className="relative glass-card rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl border border-blue-500/20">
                 
-                {/* Clean Bare Profile Image - Clickable for Full View */}
+                {/* Clean Profile Image - Clickable for Full View */}
                 <div 
                   onClick={() => setIsImageModalOpen(true)}
-                  className="relative aspect-square rounded-2xl overflow-hidden border-2 border-blue-500/30 bg-gray-100 dark:bg-[#1c1c1c] cursor-pointer group shadow-md"
+                  className="relative aspect-square rounded-2xl overflow-hidden border-2 border-blue-500/40 bg-gray-100 dark:bg-[#1c1c1c] cursor-pointer group shadow-xl"
                   role="button"
                   tabIndex={0}
                   aria-label="Click to view full image"
@@ -116,7 +120,7 @@ export const About: React.FC = () => {
 
                 {/* Quick Info List */}
                 <div className="space-y-3 pt-3 border-t border-gray-200 dark:border-gray-800/80 text-center">
-                  <div className="p-2.5 rounded-xl bg-gray-50 dark:bg-[#181818] border border-gray-200 dark:border-gray-800/80 flex flex-col items-center gap-1">
+                  <div className="p-2.5 rounded-xl bg-black/5 dark:bg-black/40 border border-gray-200 dark:border-gray-800/80 flex flex-col items-center gap-1">
                     <span className="text-[11px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
                       <MapPin className="w-3.5 h-3.5 text-blue-600 dark:text-blue-500" /> Origin & Location
                     </span>
@@ -124,14 +128,14 @@ export const About: React.FC = () => {
                   </div>
 
                   <div className="grid grid-cols-2 gap-2.5">
-                    <div className="p-2.5 rounded-xl bg-gray-50 dark:bg-[#181818] border border-gray-200 dark:border-gray-800/80 flex flex-col items-center gap-1">
+                    <div className="p-2.5 rounded-xl bg-black/5 dark:bg-black/40 border border-gray-200 dark:border-gray-800/80 flex flex-col items-center gap-1">
                       <span className="text-[11px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
                         <Briefcase className="w-3.5 h-3.5 text-blue-600 dark:text-blue-500" /> Experience
                       </span>
                       <span className="text-sm font-bold text-slate-900 dark:text-white">{PERSONAL_INFO.stats.yearsExperience}</span>
                     </div>
 
-                    <div className="p-2.5 rounded-xl bg-gray-50 dark:bg-[#181818] border border-gray-200 dark:border-gray-800/80 flex flex-col items-center gap-1">
+                    <div className="p-2.5 rounded-xl bg-black/5 dark:bg-black/40 border border-gray-200 dark:border-gray-800/80 flex flex-col items-center gap-1">
                       <span className="text-[11px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
                         <Phone className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" /> Phone
                       </span>
@@ -141,7 +145,7 @@ export const About: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="p-2.5 rounded-xl bg-gray-50 dark:bg-[#181818] border border-gray-200 dark:border-gray-800/80 flex flex-col items-center gap-1">
+                  <div className="p-2.5 rounded-xl bg-black/5 dark:bg-black/40 border border-gray-200 dark:border-gray-800/80 flex flex-col items-center gap-1">
                     <span className="text-[11px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
                       <Mail className="w-3.5 h-3.5 text-blue-600 dark:text-blue-500" /> Direct Email
                     </span>
@@ -168,10 +172,11 @@ export const About: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Download CV CTA */}
+                {/* Download CV CTA with Confetti */}
                 <div className="pt-2">
                   <Link
                     to="/resume"
+                    onClick={(e) => triggerConfetti(e)}
                     className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-600/20 hover:-translate-y-0.5 transition-all"
                   >
                     <Download className="w-4 h-4" />
@@ -179,7 +184,7 @@ export const About: React.FC = () => {
                   </Link>
                 </div>
               </div>
-            </div>
+            </TiltCard>
 
             {/* Availability Box */}
             <div className="p-6 rounded-2xl bg-white dark:bg-[#121212] border border-gray-200 dark:border-gray-800/80 shadow-sm space-y-2">

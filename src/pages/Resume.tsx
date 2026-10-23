@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { 
   Briefcase, 
   GraduationCap, 
@@ -9,13 +10,15 @@ import {
   UserCheck,
   Users,
   Phone,
-  Loader2
+  Loader2,
+  Sparkles
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { EXPERIENCE_ITEMS, PERSONAL_INFO, PERSONAL_ATTRIBUTES, REFERENCES } from '../data/portfolioData';
 import { SectionHeader } from '../components/SectionHeader';
+import { TiltCard } from '../components/TiltCard';
 
 export const Resume: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'all' | 'experience' | 'education'>('all');
@@ -491,14 +494,14 @@ export const Resume: React.FC = () => {
         />
 
         {/* Download CV Bar & Tabs */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 my-10 p-5 sm:p-6 rounded-2xl bg-white dark:bg-[#121212] border border-gray-200 dark:border-gray-800/80 shadow-sm">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 my-10 p-5 sm:p-6 rounded-2xl glass-card border border-blue-500/20 shadow-xl">
           {/* Tab buttons */}
-          <div className="flex items-center p-1.5 rounded-xl bg-gray-100 dark:bg-[#1a1a1a] border border-gray-200 dark:border-gray-800 w-full sm:w-auto">
+          <div className="flex items-center p-1.5 rounded-xl bg-black/5 dark:bg-[#1a1a1f] border border-gray-200 dark:border-gray-800 w-full sm:w-auto">
             <button
               onClick={() => setActiveTab('all')}
-              className={`flex-1 sm:flex-initial px-5 py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all ${
+              className={`flex-1 sm:flex-initial px-5 py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
                 activeTab === 'all'
-                  ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20'
+                  ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
                   : 'text-slate-700 dark:text-gray-400 hover:text-blue-600 dark:hover:text-white'
               }`}
             >
@@ -506,9 +509,9 @@ export const Resume: React.FC = () => {
             </button>
             <button
               onClick={() => setActiveTab('experience')}
-              className={`flex-1 sm:flex-initial px-5 py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center justify-center gap-1.5 ${
+              className={`flex-1 sm:flex-initial px-5 py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                 activeTab === 'experience'
-                  ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20'
+                  ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
                   : 'text-slate-700 dark:text-gray-400 hover:text-blue-600 dark:hover:text-white'
               }`}
             >
@@ -517,9 +520,9 @@ export const Resume: React.FC = () => {
             </button>
             <button
               onClick={() => setActiveTab('education')}
-              className={`flex-1 sm:flex-initial px-5 py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center justify-center gap-1.5 ${
+              className={`flex-1 sm:flex-initial px-5 py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                 activeTab === 'education'
-                  ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20'
+                  ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
                   : 'text-slate-700 dark:text-gray-400 hover:text-blue-600 dark:hover:text-white'
               }`}
             >
@@ -532,12 +535,12 @@ export const Resume: React.FC = () => {
           <button
             onClick={handleDownloadPDF}
             disabled={isGeneratingPDF}
-            className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white transition-all ${
+            className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white transition-all cursor-pointer ${
               isGeneratingPDF
                 ? 'bg-blue-500/80 cursor-wait'
                 : downloadSuccess
-                ? 'bg-emerald-600 hover:bg-emerald-700 shadow-md shadow-emerald-600/20'
-                : 'bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-600/20 hover:-translate-y-0.5'
+                ? 'bg-emerald-600 hover:bg-emerald-700 shadow-md shadow-emerald-600/25'
+                : 'bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-600/25 hover:-translate-y-0.5'
             }`}
           >
             {isGeneratingPDF ? (
@@ -550,114 +553,106 @@ export const Resume: React.FC = () => {
                 <CheckCircle2 className="w-4 h-4" />
                 <span>Downloaded Successfully!</span>
               </>
-            ) : (
-              <>
-                <Download className="w-4 h-4" />
-                <span>Download PDF Resume</span>
-              </>
             )}
           </button>
         </div>
 
         {/* Personal Profile & Core Attributes Card */}
-        <div className="mb-10 p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-white dark:bg-[#121212] border border-gray-200 dark:border-gray-800/80 space-y-4 shadow-sm">
+        <div className="mb-10 p-6 sm:p-8 rounded-3xl glass-card border border-blue-500/20 space-y-4 shadow-xl">
           <div className="flex items-center gap-2.5 pb-3 border-b border-gray-200 dark:border-gray-800/80">
-            <span className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
+            <span className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
               <UserCheck className="w-4 h-4" />
             </span>
             <h3 className="text-base sm:text-xl font-bold text-slate-900 dark:text-white">Personal Profile & Professional Strengths</h3>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-3 text-xs sm:text-sm text-slate-700 dark:text-gray-300">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs sm:text-sm text-slate-700 dark:text-gray-300">
             {PERSONAL_ATTRIBUTES.map((attr, idx) => (
-              <div key={idx} className="flex items-start gap-2.5 p-3 rounded-xl bg-gray-50 dark:bg-[#181818] border border-gray-200 dark:border-gray-800/60">
-                <CheckCircle2 className="w-4 h-4 text-blue-600 dark:text-blue-500 shrink-0 mt-0.5" />
+              <div key={idx} className="flex items-start gap-2.5 p-3 rounded-xl bg-black/5 dark:bg-[#18181f] border border-gray-200 dark:border-gray-800/60">
+                <CheckCircle2 className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
                 <span className="leading-relaxed">{attr}</span>
               </div>
             ))}
           </div>
-        </div>
-
-        {/* Timeline Grid */}
+        </div>        {/* Timeline Grid */}
         <div className="space-y-6 sm:space-y-8 mt-10">
           {filteredItems.map((item) => (
-            <div
-              key={item.id}
-              className="group relative bg-white dark:bg-[#121212] border border-gray-200 dark:border-gray-800/80 hover:border-blue-500/50 rounded-2xl sm:rounded-3xl p-5 sm:p-8 lg:p-10 transition-all duration-300 hover:shadow-lg dark:hover:shadow-2xl dark:hover:shadow-blue-500/10 space-y-5 shadow-xs"
-            >
-              {/* Header row */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-gray-200 dark:border-gray-800/80 pb-4 sm:pb-5">
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/30 flex items-center justify-center text-blue-600 dark:text-blue-400 shrink-0">
-                      {item.type === 'experience' ? (
-                        <Briefcase className="w-4 h-4" />
-                      ) : (
-                        <GraduationCap className="w-4 h-4" />
-                      )}
-                    </span>
-                    <h3 className="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                      {item.role}
-                    </h3>
+            <TiltCard key={item.id} glowColor="rgba(59, 130, 246, 0.15)">
+              <div className="group relative glass-card hover:border-blue-500/50 rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 transition-all duration-300 hover:shadow-2xl space-y-5 border border-blue-500/20">
+                {/* Header row */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-gray-200 dark:border-gray-800/80 pb-4 sm:pb-5">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2.5">
+                      <span className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-600 dark:text-blue-400 shrink-0">
+                        {item.type === 'experience' ? (
+                          <Briefcase className="w-4 h-4" />
+                        ) : (
+                          <GraduationCap className="w-4 h-4" />
+                        )}
+                      </span>
+                      <h3 className="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                        {item.role}
+                      </h3>
+                    </div>
+                    <p className="text-xs sm:text-sm font-semibold text-blue-600 dark:text-blue-400/90 pl-10.5">
+                      {item.company}
+                    </p>
                   </div>
-                  <p className="text-xs sm:text-sm font-semibold text-blue-600 dark:text-blue-400/90 pl-10.5">
-                    {item.company}
-                  </p>
+
+                  <div className="flex flex-wrap items-center gap-2.5 sm:gap-4 text-xs font-medium text-gray-500 dark:text-gray-400 sm:self-start pt-1">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-700 dark:text-blue-400 font-semibold">
+                      <Calendar className="w-3.5 h-3.5" />
+                      <span>{item.period}</span>
+                    </span>
+                    <span className="inline-flex items-center gap-1 text-slate-600 dark:text-gray-400">
+                      <MapPin className="w-3.5 h-3.5 text-blue-600 dark:text-gray-500" />
+                      <span>{item.location}</span>
+                    </span>
+                  </div>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-2.5 sm:gap-4 text-xs font-medium text-gray-500 dark:text-gray-400 sm:self-start pt-1">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 dark:bg-[#1c1c1c] border border-blue-200 dark:border-gray-800 text-blue-700 dark:text-blue-400 font-semibold">
-                    <Calendar className="w-3.5 h-3.5" />
-                    <span>{item.period}</span>
-                  </span>
-                  <span className="inline-flex items-center gap-1 text-slate-600 dark:text-gray-400">
-                    <MapPin className="w-3.5 h-3.5 text-blue-600 dark:text-gray-500" />
-                    <span>{item.location}</span>
-                  </span>
+                {/* Description */}
+                <p className="text-sm sm:text-base text-slate-600 dark:text-gray-300 leading-relaxed">
+                  {item.description}
+                </p>
+
+                {/* Achievements */}
+                {item.achievements && item.achievements.length > 0 && (
+                  <div className="space-y-2.5">
+                    <h4 className="text-xs uppercase tracking-wider text-slate-500 dark:text-gray-400 font-bold">
+                      Key Highlights & Impact:
+                    </h4>
+                    <ul className="space-y-2 text-xs sm:text-sm text-slate-700 dark:text-gray-300">
+                      {item.achievements.map((ach, i) => (
+                        <li key={i} className="flex items-start gap-2.5">
+                          <CheckCircle2 className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
+                          <span>{ach}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Technologies */}
+                <div className="pt-2 flex flex-wrap gap-2">
+                  {item.technologies.map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-2.5 py-1 rounded-md text-xs font-medium bg-black/5 dark:bg-[#1a1a20] text-slate-700 dark:text-gray-300 border border-gray-200 dark:border-gray-800"
+                    >
+                      {tech}
+                    </span>
+                  ))}
                 </div>
               </div>
-
-              {/* Description */}
-              <p className="text-sm sm:text-base text-slate-600 dark:text-gray-300 leading-relaxed">
-                {item.description}
-              </p>
-
-              {/* Achievements */}
-              {item.achievements && item.achievements.length > 0 && (
-                <div className="space-y-2.5">
-                  <h4 className="text-xs uppercase tracking-wider text-slate-500 dark:text-gray-400 font-semibold">
-                    Key Highlights & Impact:
-                  </h4>
-                  <ul className="space-y-2 text-xs sm:text-sm text-slate-700 dark:text-gray-300">
-                    {item.achievements.map((ach, i) => (
-                      <li key={i} className="flex items-start gap-2.5">
-                        <CheckCircle2 className="w-4 h-4 text-blue-600 dark:text-blue-500 shrink-0 mt-0.5" />
-                        <span>{ach}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {/* Technologies */}
-              <div className="pt-2 flex flex-wrap gap-2">
-                {item.technologies.map((tech) => (
-                  <span
-                    key={tech}
-                    className="px-2.5 py-1 rounded-md text-xs font-medium bg-gray-100 dark:bg-[#1a1a1a] text-slate-700 dark:text-gray-300 border border-gray-200 dark:border-gray-800"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
+            </TiltCard>
           ))}
         </div>
 
         {/* Dedicated Professional & Technical Referees Card */}
-        <div className="mt-12 p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#121212] border border-gray-200 dark:border-gray-800/80 shadow-sm space-y-6">
+        <div className="mt-12 p-6 sm:p-8 rounded-3xl glass-card border border-blue-500/20 shadow-2xl space-y-6">
           <div className="flex items-center justify-between pb-4 border-b border-gray-200 dark:border-gray-800/80">
             <div className="flex items-center gap-3">
-              <span className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
+              <span className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
                 <Users className="w-5 h-5" />
               </span>
               <div>
@@ -675,14 +670,14 @@ export const Resume: React.FC = () => {
             {REFERENCES.map((ref, idx) => (
               <div
                 key={idx}
-                className="p-5 rounded-2xl bg-gray-50/70 dark:bg-[#181818] border border-gray-200 dark:border-gray-800/80 hover:border-blue-500/40 transition-colors flex flex-col justify-between space-y-3"
+                className="p-5 rounded-2xl bg-black/5 dark:bg-[#18181f] border border-gray-200 dark:border-gray-800/80 hover:border-blue-500/40 transition-colors flex flex-col justify-between space-y-3"
               >
                 <div className="space-y-1">
                   <div className="flex items-center justify-between">
                     <h4 className="text-base font-bold text-slate-900 dark:text-white">
                       {ref.name}
                     </h4>
-                    <span className="px-2 py-0.5 rounded text-[11px] font-semibold bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20">
+                    <span className="px-2 py-0.5 rounded text-[11px] font-semibold bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-500/20">
                       {ref.role}
                     </span>
                   </div>
@@ -707,14 +702,14 @@ export const Resume: React.FC = () => {
         </div>
 
         {/* Bottom CTA Card */}
-        <div className="mt-12 p-8 rounded-3xl bg-white dark:bg-[#141414] border border-gray-200 dark:border-gray-800/80 flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left shadow-sm">
+        <div className="mt-12 p-8 rounded-3xl glass-card border border-blue-500/20 flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left shadow-2xl">
           <div>
             <h4 className="text-xl font-bold text-slate-900 dark:text-white">Interested in reviewing specific codebases or case studies?</h4>
             <p className="text-sm text-slate-600 dark:text-gray-400 mt-1">Explore my open-source repositories and live deployed applications.</p>
           </div>
           <button
             onClick={handleDownloadPDF}
-            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-600/20 transition-all shrink-0"
+            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-600/30 transition-all shrink-0 cursor-pointer"
           >
             <Download className="w-4 h-4" />
             <span>Download PDF Resume</span>
